@@ -1,22 +1,44 @@
-import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
+import 'package:pathshala/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:pathshala/pages/home.dart';
+import 'package:go_router/go_router.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return FlutterSplashScreen(
-      duration: const Duration(milliseconds: 2500),
-      backgroundColor: Theme.of(context).primaryColorDark,
-      nextScreen: const HomeScreen(),
-      splashScreenBody: Center(
-        child: Lottie.asset(
-          'assets/lottie/splash_screen.json',
-          width: 200,
-          height: 200,
+    Future.delayed(const Duration(milliseconds: 2500))
+        .then((value) => GoRouter.of(context).go('/login'));
+
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return Scaffold(
+      backgroundColor: AppColors.primary,
+      body: SizedBox(
+        height: height,
+        width: width,
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            Image.asset(
+              'assets/images/background_vector.png',
+            ),
+            Image.asset(
+              'assets/images/logo_white.png',
+              height: 250,
+              width: 250,
+            ),
+          ],
         ),
       ),
     );

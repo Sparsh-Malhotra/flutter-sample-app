@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pathshala/router.dart';
 import 'package:pathshala/splash_screen.dart';
 
 var kColorScheme =
@@ -14,11 +15,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       theme: ThemeData().copyWith(
         colorScheme: kColorScheme,
       ),
-      home: const SplashScreen(),
+      routerConfig: router,
     );
   }
 }
