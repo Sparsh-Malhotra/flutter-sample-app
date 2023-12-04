@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/widgets/large_button.dart';
+import 'package:pathshala/widgets/large_outlined_button.dart';
 
 class MobileInput extends StatefulWidget {
   const MobileInput({super.key, required this.onSubmit});
@@ -33,7 +34,7 @@ class _MobileInputState extends State<MobileInput> {
     double width = MediaQuery.of(context).size.width;
 
     return SizedBox(
-      height: height * 0.4,
+      height: height * 0.5,
       child: Container(
         width: width,
         decoration: const BoxDecoration(color: AppColors.primary),
@@ -95,6 +96,18 @@ class _MobileInputState extends State<MobileInput> {
                 height: 50,
                 width: width,
                 child: LargeButton(text: 'Send OTP', onPress: widget.onSubmit),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              SizedBox(
+                height: 50,
+                width: width,
+                child: LargeOutlinedButton(
+                    text: 'Continue as Guest', onPress: () {}),
+              ),
+              SizedBox(
+                height: height * 0.1,
               )
             ],
           ),

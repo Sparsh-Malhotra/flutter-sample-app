@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pathshala/pages/home/views/home.dart';
 import 'package:pathshala/pages/login/login.dart';
 import 'package:pathshala/splash_screen.dart';
 
@@ -40,6 +41,14 @@ final router = GoRouter(
       pageBuilder: (ctx, state) => CustomSlideTransition(
         key: state.pageKey,
         child: const LoginScreen(),
+      ),
+    ),
+    GoRoute(
+      name: 'home',
+      path: '/home',
+      pageBuilder: (ctx, state) => CustomSlideTransition(
+        key: state.pageKey,
+        child: HomeScreen(),
       ),
     )
   ],

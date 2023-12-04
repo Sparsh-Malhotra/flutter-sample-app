@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pathshala/pages/login/mobile_input.dart';
 import 'package:pathshala/pages/login/otp_verify.dart';
 import 'package:pathshala/utils/app_colors.dart';
@@ -15,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   Widget? content;
+  int? screenIndex;
 
   @override
   void initState() {
@@ -22,12 +24,20 @@ class _LoginScreenState extends State<LoginScreen> {
     content = MobileInput(
       onSubmit: handleSendOtp,
     );
+    screenIndex = 1;
   }
 
   void handleSendOtp() {
     setState(() {
-      content = OTPVerify();
+      content = OTPVerify(
+        onSubmit: handleVerifyOtp,
+      );
+      screenIndex = 2;
     });
+  }
+
+  void handleVerifyOtp() {
+    GoRouter.of(context).go('/home');
   }
 
   @override
@@ -76,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 500),
               switchInCurve: Curves.easeIn,
-              switchOutCurve: Curves.easeOut,
+              // switchOutCurve: Curves.easeOut,
               transitionBuilder: (child, animation) {
                 return SlideTransition(
                   position: Tween<Offset>(

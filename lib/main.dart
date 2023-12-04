@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pathshala/router.dart';
-import 'package:pathshala/splash_screen.dart';
-
-var kColorScheme =
-    ColorScheme.fromSeed(seedColor: const Color.fromRGBO(29, 158, 241, 1));
+import 'package:pathshala/utils/app_colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,8 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      theme: ThemeData().copyWith(
-        colorScheme: kColorScheme,
+      theme: ThemeData(
+        primarySwatch: AppColors.primarySwatch,
       ),
       routerConfig: router,
     );

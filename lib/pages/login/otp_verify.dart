@@ -4,7 +4,9 @@ import 'package:pathshala/widgets/large_button.dart';
 import 'package:pinput/pinput.dart';
 
 class OTPVerify extends StatefulWidget {
-  const OTPVerify({super.key});
+  OTPVerify({super.key, required this.onSubmit});
+
+  void Function() onSubmit;
 
   @override
   State<OTPVerify> createState() {
@@ -37,8 +39,8 @@ class _OTPVerifyState extends State<OTPVerify> {
     );
 
     return SizedBox(
-      height: height * 0.4,
       child: Container(
+        height: height * 0.5,
         width: width,
         decoration: const BoxDecoration(color: AppColors.primary),
         child: Container(
@@ -65,22 +67,15 @@ class _OTPVerifyState extends State<OTPVerify> {
                       child: Pinput(
                         controller: pinController,
                         androidSmsAutofillMethod:
-                            AndroidSmsAutofillMethod.smsUserConsentApi,
+                            AndroidSmsAutofillMethod.smsRetrieverApi,
                         listenForMultipleSmsOnAndroid: true,
                         separatorBuilder: (index) => const SizedBox(width: 8),
                         validator: (value) {
                           return value == '1234' ? null : 'Pin is incorrect';
                         },
-                        // onClipboardFound: (value) {
-                        //   debugPrint('onClipboardFound: $value');
-                        //   pinController.setText(value);
-                        // },
                         hapticFeedbackType: HapticFeedbackType.lightImpact,
                         onCompleted: (pin) {
                           print('onCompleted: $pin');
-                        },
-                        onChanged: (value) {
-                          print('onChanged: $value');
                         },
                         cursor: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -110,6 +105,7 @@ class _OTPVerifyState extends State<OTPVerify> {
                         errorPinTheme: defaultPinTheme.copyBorderWith(
                           border: Border.all(color: Colors.redAccent),
                         ),
+                        pinputAutovalidateMode: PinputAutovalidateMode.disabled,
                       ),
                     ),
                   ],
@@ -119,7 +115,17 @@ class _OTPVerifyState extends State<OTPVerify> {
               SizedBox(
                 height: 50,
                 width: width,
-                child: LargeButton(text: 'Submit OTP', onPress: () {}),
+                child: LargeButton(
+                  text: 'Submit OTP',
+                  onPress: () {
+                    if (formKey.currentState!.validate()) {
+                      widget.onSubmit();
+                    }
+                  },
+                ),
+              ),
+              SizedBox(
+                height: height * 0.1,
               )
             ],
           ),
