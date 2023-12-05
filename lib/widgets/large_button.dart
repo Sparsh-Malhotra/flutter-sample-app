@@ -28,7 +28,7 @@ class LargeButton extends StatelessWidget {
         onPressed: onPress,
         child: Text(
           text,
-          style: AppTextStyle.regularWhite16,
+          style: AppTextStyle.regularWhite18,
         ),
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pathshala/pages/login/mobile_input.dart';
-import 'package:pathshala/pages/login/otp_verify.dart';
+import 'package:pathshala/pages/login/views/mobile_input.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/app_text_styles.dart';
 
@@ -15,25 +14,29 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  Widget? content;
-  int? screenIndex;
+  // Widget? content;
+  // int? screenIndex;
 
-  @override
-  void initState() {
-    super.initState();
-    content = MobileInput(
-      onSubmit: handleSendOtp,
-    );
-    screenIndex = 1;
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   content = MobileInput(
+  //     onSubmit: handleSendOtp,
+  //   );
+  //   screenIndex = 1;
+  // }
 
-  void handleSendOtp() {
-    setState(() {
-      content = OTPVerify(
-        onSubmit: handleVerifyOtp,
-      );
-      screenIndex = 2;
-    });
+  // void handleSendOtp() {
+  //   setState(() {
+  //     content = OTPVerify(
+  //       onSubmit: handleVerifyOtp,
+  //     );
+  //     screenIndex = 2;
+  //   });
+  // }
+
+  void handleSubmit() {
+    GoRouter.of(context).go('/home');
   }
 
   void handleVerifyOtp() {
@@ -83,20 +86,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
-              switchInCurve: Curves.easeIn,
-              // switchOutCurve: Curves.easeOut,
-              transitionBuilder: (child, animation) {
-                return SlideTransition(
-                  position: Tween<Offset>(
-                          begin: const Offset(1, 0), end: const Offset(0, 0))
-                      .animate(animation),
-                  child: child,
-                );
-              },
-              child: content,
-            ),
+            // AnimatedSwitcher(
+            //   duration: const Duration(milliseconds: 500),
+            //   switchInCurve: Curves.easeIn,
+            //   // switchOutCurve: Curves.easeOut,
+            //   transitionBuilder: (child, animation) {
+            //     return SlideTransition(
+            //       position: Tween<Offset>(
+            //               begin: const Offset(1, 0), end: const Offset(0, 0))
+            //           .animate(animation),
+            //       child: child,
+            //     );
+            //   },
+            //   child: content,
+            // ),
+            MobileInput(onSubmit: handleSubmit)
           ],
         ),
       ),

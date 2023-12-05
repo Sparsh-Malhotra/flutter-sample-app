@@ -26,7 +26,7 @@ class LargeOutlinedButton extends StatelessWidget {
         onPressed: onPress,
         child: Text(
           text,
-          style: AppTextStyle.regularPrimary16,
+          style: AppTextStyle.regularPrimary18,
         ),
       ),
     );

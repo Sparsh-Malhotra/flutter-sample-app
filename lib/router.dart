@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pathshala/pages/home/views/home.dart';
-import 'package:pathshala/pages/login/login.dart';
+import 'package:pathshala/pages/login/views/login.dart';
+import 'package:pathshala/pages/register/views/register.dart';
 import 'package:pathshala/splash_screen.dart';
 
 class CustomSlideTransition extends CustomTransitionPage<void> {
@@ -44,12 +45,20 @@ final router = GoRouter(
       ),
     ),
     GoRoute(
+      name: 'register',
+      path: '/register',
+      pageBuilder: (ctx, state) => CustomSlideTransition(
+        key: state.pageKey,
+        child: const RegisterScreen(),
+      ),
+    ),
+    GoRoute(
       name: 'home',
       path: '/home',
       pageBuilder: (ctx, state) => CustomSlideTransition(
         key: state.pageKey,
         child: HomeScreen(),
       ),
-    )
+    ),
   ],
 );
