@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get/get.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/widgets/large_button.dart';
 import 'package:pathshala/widgets/large_outlined_button.dart';
@@ -100,7 +100,7 @@ class _MobileInputState extends State<MobileInput> {
                       padding: const EdgeInsets.only(left: 0),
                     ),
                     onPressed: () {
-                      GoRouter.of(context).go('/register');
+                      Get.toNamed('/register');
                     },
                     child: Text('Sign up',
                         style: TextStyle(
@@ -157,7 +157,10 @@ class _MobileInputState extends State<MobileInput> {
                 height: 50,
                 width: width,
                 child: LargeOutlinedButton(
-                    text: 'Continue as Guest', onPress: () {}),
+                    text: 'Continue as Guest',
+                    onPress: () {
+                      Get.toNamed('/home');
+                    }),
               ),
             ],
           ),

@@ -1,6 +1,6 @@
+import 'package:get/get.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 2500))
-        .then((value) => GoRouter.of(context).go('/login'));
+        .then((value) => Get.toNamed('/login'));
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;

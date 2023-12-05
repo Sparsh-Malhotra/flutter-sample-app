@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  double topBarHeight = 155;
+  double topBarHeight = 135;
   double appBarPad = 6.0;
   int today = DateTime.now().day;
 

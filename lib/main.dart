@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pathshala/router.dart';
 import 'package:pathshala/utils/app_colors.dart';
 
@@ -12,11 +13,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return GetMaterialApp(
       theme: ThemeData(
         primarySwatch: AppColors.primarySwatch,
       ),
-      routerConfig: router,
+      initialRoute: Routes.splashScreen,
+      getPages: getPages,
     );
   }
 }

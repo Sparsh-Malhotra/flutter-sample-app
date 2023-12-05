@@ -1,9 +1,13 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:pathshala/app_contants.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/curves/small_curve.dart';
 import 'package:pathshala/utils/functions.dart';
 import 'package:pathshala/widgets/input.dart';
 import 'package:pathshala/widgets/large_button.dart';
+import 'package:pathshala/widgets/pickers/date_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -47,7 +51,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           required: false,
                         ),
                         inputFile(label: 'Last Name'),
-                        inputFile(label: 'Date of birth'),
+                        inputFile(
+                          label: 'Date of birth',
+                          readOnly: true,
+                          suffixIcon: const Icon(
+                            Icons.calendar_month,
+                            color: AppColors.primary,
+                          ),
+                          onTap: () async {
+                            final temp = await DatePicker()
+                                    .buildMaterialDatePicker(context) ??
+                                DateTime.now();
+                          },
+                          value: '${DateFormat('dd/MM/yyyy').format(
+                            DateTime.now(),
+                          )}',
+                        ),
                         inputFile(
                           label: 'Phone',
                           keyboardType: TextInputType.phone,
@@ -61,9 +80,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           label: 'Username',
                           keyboardType: TextInputType.text,
                         ),
-                        inputFile(
-                          label: 'Role',
-                          keyboardType: TextInputType.text,
+                        CustomDropdown<String>(
+                          hintText: 'Select role',
+                          items: roles,
+                          onChanged: (value) {},
+                          closedBorder: Border.all(
+                            color: AppColors.primarySplash,
+                          ),
+                          expandedBorder: Border.all(
+                            color: AppColors.primary,
+                          ),
+                          hintBuilder: (ctx, text) => Text(text),
+                          headerBuilder: (ctx, text) => Text(text),
                         ),
                         const SizedBox(
                           height: 10,

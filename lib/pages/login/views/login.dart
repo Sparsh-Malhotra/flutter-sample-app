@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get/get.dart';
 import 'package:pathshala/pages/login/views/mobile_input.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/app_text_styles.dart';
@@ -36,11 +36,11 @@ class _LoginScreenState extends State<LoginScreen> {
   // }
 
   void handleSubmit() {
-    GoRouter.of(context).go('/home');
+    Get.toNamed('/home');
   }
 
   void handleVerifyOtp() {
-    GoRouter.of(context).go('/home');
+    Get.toNamed('/home');
   }
 
   @override
@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           children: [
             SizedBox(
-              height: height * 0.5,
+              height: height * 0.40,
               child: Stack(
                 alignment: AlignmentDirectional.center,
                 children: [
@@ -73,11 +73,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Image.asset(
                     'assets/images/logo_white.png',
-                    height: 220,
-                    width: 220,
+                    height: height * 0.5,
+                    width: width * 0.5,
                   ),
                   Positioned(
-                    bottom: 35,
+                    bottom: 30,
                     child: Text(
                       'Sign In',
                       style: AppTextStyle.regularWhite30,

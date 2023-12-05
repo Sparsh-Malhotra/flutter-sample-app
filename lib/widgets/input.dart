@@ -6,7 +6,11 @@ Widget inputFile({
   label,
   bool required = true,
   TextInputType keyboardType = TextInputType.text,
+  bool readOnly = false,
   obscureText = false,
+  Widget? suffixIcon,
+  void Function()? onTap,
+  String? value,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,16 +34,21 @@ Widget inputFile({
         height: 5,
       ),
       TextFormField(
+        readOnly: readOnly,
+        initialValue: value,
         obscureText: obscureText,
         keyboardType: keyboardType,
-        decoration: const InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-          focusedBorder: OutlineInputBorder(
+        onTap: onTap,
+        decoration: InputDecoration(
+          suffixIcon: suffixIcon,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+          focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: AppColors.primary)),
-          enabledBorder: OutlineInputBorder(
+          enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.primarySplash),
           ),
-          border: OutlineInputBorder(
+          border: const OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.primary),
           ),
         ),
