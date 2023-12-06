@@ -132,7 +132,14 @@ class HomeScreen extends StatelessWidget {
                             ),
                             dashboardC.selectedDate.value.day != today
                                 ? IconButton(
-                                    onPressed: () => {},
+                                    onPressed: () => {
+                                      Get.toNamed(
+                                        'attendance',
+                                        parameters: {
+                                          'canEdit': 'false',
+                                        },
+                                      )
+                                    },
                                     icon: const Icon(
                                       Icons.remove_red_eye,
                                       color: AppColors.primary,
@@ -141,7 +148,14 @@ class HomeScreen extends StatelessWidget {
                                 : Container(),
                             dashboardC.selectedDate.value.day == today
                                 ? IconButton(
-                                    onPressed: () => {},
+                                    onPressed: () => {
+                                      Get.toNamed(
+                                        '/attendance',
+                                        parameters: {
+                                          'canEdit': 'true',
+                                        },
+                                      ),
+                                    },
                                     icon: const Icon(
                                       Icons.edit,
                                       color: AppColors.primary,

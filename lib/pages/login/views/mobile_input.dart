@@ -102,10 +102,12 @@ class _MobileInputState extends State<MobileInput> {
                     onPressed: () {
                       Get.toNamed('/register');
                     },
-                    child: Text('Sign up',
-                        style: TextStyle(
-                          color: AppColors.primarySwatch.shade800,
-                        )),
+                    child: Text(
+                      'Sign up',
+                      style: TextStyle(
+                        color: AppColors.primarySwatch.shade800,
+                      ),
+                    ),
                   )
                 ],
               ),
