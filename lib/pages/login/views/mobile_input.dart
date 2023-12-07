@@ -4,6 +4,7 @@ import 'package:pathshala/pages/login/controllers/login_controller.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/widgets/large_button.dart';
 import 'package:pathshala/widgets/large_outlined_button.dart';
+import 'package:pathshala/widgets/loading_button.dart';
 
 class MobileInput extends StatefulWidget {
   const MobileInput({super.key, required this.onSubmit});
@@ -120,7 +121,7 @@ class _MobileInputState extends State<MobileInput> {
                 SizedBox(
                   height: 50,
                   width: width,
-                  child: LargeButton(
+                  child: LoadingButton(
                     text: 'Login',
                     onPress: widget.onSubmit,
                   ),

@@ -17,8 +17,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final LoginController _loginController = Get.put(LoginController());
 
-  void handleSubmit() {
-    _loginController.login();
+  void handleSubmit() async {
+    await _loginController.login();
   }
 
   void handleVerifyOtp() {
