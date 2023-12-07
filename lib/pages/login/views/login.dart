@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pathshala/pages/login/controllers/login_controller.dart';
 import 'package:pathshala/pages/login/views/mobile_input.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/app_text_styles.dart';
@@ -14,29 +15,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // Widget? content;
-  // int? screenIndex;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   content = MobileInput(
-  //     onSubmit: handleSendOtp,
-  //   );
-  //   screenIndex = 1;
-  // }
-
-  // void handleSendOtp() {
-  //   setState(() {
-  //     content = OTPVerify(
-  //       onSubmit: handleVerifyOtp,
-  //     );
-  //     screenIndex = 2;
-  //   });
-  // }
+  final LoginController _loginController = Get.put(LoginController());
 
   void handleSubmit() {
-    Get.toNamed('/home');
+    _loginController.login();
   }
 
   void handleVerifyOtp() {
