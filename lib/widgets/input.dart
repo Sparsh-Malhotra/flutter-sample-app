@@ -11,6 +11,9 @@ Widget inputFile({
   Widget? suffixIcon,
   void Function()? onTap,
   String? value,
+  TextEditingController? controller,
+  void Function(String)? onChange,
+  String? Function(String?)? validator,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,11 +37,16 @@ Widget inputFile({
         height: 5,
       ),
       TextFormField(
+        controller: controller != null
+            ? controller
+            : value != null
+                ? TextEditingController(text: value)
+                : null,
         readOnly: readOnly,
-        initialValue: value,
         obscureText: obscureText,
         keyboardType: keyboardType,
         onTap: onTap,
+        onChanged: onChange,
         decoration: InputDecoration(
           suffixIcon: suffixIcon,
           contentPadding:
@@ -52,6 +60,7 @@ Widget inputFile({
             borderSide: BorderSide(color: AppColors.primary),
           ),
         ),
+        validator: validator,
       ),
       const SizedBox(
         height: 10,
