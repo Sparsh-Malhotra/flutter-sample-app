@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pathshala/pages/login/models/login_model.dart';
 import 'package:pathshala/services/auth_service.dart';
-import 'package:pathshala/utils/app_colors.dart';
 
 class LoginController extends GetxController {
   TextEditingController usernameController = TextEditingController();
@@ -42,9 +41,8 @@ class LoginController extends GetxController {
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.redAccent,
       colorText: Colors.white,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 2000),
       margin: const EdgeInsets.all(15),
-      forwardAnimationCurve: Curves.easeOutBack,
     );
   }
 }

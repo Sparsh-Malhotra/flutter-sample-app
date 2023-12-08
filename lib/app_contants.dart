@@ -1,10 +1,19 @@
-import 'package:pathshala/pages/attendance/models/student.dart';
+enum Roles {
+  admin,
+  student,
+  mentor,
+  coMentor,
+  volunteer,
+  parent,
+}
 
-const List<String> roles = [
-  'Admin',
-  'Mentor',
-  'Co-Mentor',
-  'Volunteer',
-  'Member',
-  'Parent',
+const bloodGroups = [
+  'A+',
+  'A-',
+  'B+',
+  'B-',
+  'O+',
+  'O-',
+  'AB+',
+  'AB-',
 ];

@@ -1,3 +1,4 @@
+import 'package:get_storage/get_storage.dart';
 import 'package:pathshala/pages/home/controllers/home_controller.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/app_text_styles.dart';

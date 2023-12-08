@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pathshala/pages/login/controllers/login_controller.dart';
 import 'package:pathshala/utils/app_colors.dart';
-import 'package:pathshala/widgets/large_button.dart';
 import 'package:pathshala/widgets/large_outlined_button.dart';
 import 'package:pathshala/widgets/loading_button.dart';
 

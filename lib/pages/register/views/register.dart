@@ -5,10 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:pathshala/app_contants.dart';
 import 'package:pathshala/pages/register/controllers/register_controller.dart';
 import 'package:pathshala/utils/app_colors.dart';
+import 'package:pathshala/utils/app_text_styles.dart';
 import 'package:pathshala/utils/curves/small_curve.dart';
 import 'package:pathshala/utils/functions.dart';
 import 'package:pathshala/widgets/input.dart';
-import 'package:pathshala/widgets/large_button.dart';
+import 'package:pathshala/widgets/loading_button.dart';
 import 'package:pathshala/widgets/pickers/date_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -24,6 +25,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   RegisterController registerController = Get.put(RegisterController());
 
   final _registerFormKey = GlobalKey<FormState>();
+
+  void handleRegister() async {
+    if (_registerFormKey.currentState!.validate()) {
+      _registerFormKey.currentState!.save();
+      await registerController.register();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +62,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       children: [
                         inputFile(
                           label: 'First Name',
-                          onChange: (value) {
-                            registerController.firstName.value = value;
+                          onSave: (value) {
+                            registerController.firstName.value = value!;
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -69,8 +77,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         inputFile(
                           label: 'Middle Name',
                           required: false,
-                          onChange: (value) {
-                            registerController.middleName.value = value;
+                          onSave: (value) {
+                            registerController.middleName.value = value!;
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -83,8 +91,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         inputFile(
                           label: 'Last Name',
-                          onChange: (value) {
-                            registerController.lastName.value = value;
+                          onSave: (value) {
+                            registerController.lastName.value = value!;
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -115,11 +123,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             value: registerController.dob.value,
                           );
                         }),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Blood Group',
+                            style: AppTextStyle.regularBlack16,
+                          ),
+                        ),
+                        CustomDropdown<String>(
+                          hintText: '',
+                          items: bloodGroups,
+                          onChanged: (value) {
+                            registerController.bloodGroup.value = value;
+                          },
+                          closedBorder: Border.all(
+                            color: AppColors.primarySplash,
+                          ),
+                          expandedBorder: Border.all(
+                            color: AppColors.primary,
+                          ),
+                          hintBuilder: (ctx, text) => Text(text),
+                          headerBuilder: (ctx, text) => Text(text),
+                        ),
                         inputFile(
                           label: 'Phone',
                           keyboardType: TextInputType.phone,
-                          onChange: (value) {
-                            registerController.phone.value = value;
+                          onSave: (value) {
+                            registerController.phone.value = value!;
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -135,8 +165,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           label: 'Email',
                           keyboardType: TextInputType.emailAddress,
                           required: false,
-                          onChange: (value) {
-                            registerController.email.value = value;
+                          onSave: (value) {
+                            registerController.email.value = value!;
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -150,8 +180,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         inputFile(
                           label: 'Username',
                           keyboardType: TextInputType.text,
-                          onChange: (value) {
-                            registerController.username.value = value;
+                          onSave: (value) {
+                            registerController.username.value = value!;
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'This field is required';
+                            }
+                            return null;
+                          },
+                        ),
+                        inputFile(
+                          label: 'Password',
+                          keyboardType: TextInputType.text,
+                          onSave: (value) {
+                            registerController.password.value = value!;
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -162,9 +205,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         CustomDropdown<String>(
                           hintText: 'Select role',
-                          items: roles,
+                          items: Roles.values.map((e) => e.name).toList(),
                           onChanged: (value) {
-                            registerController.role.value = value;
+                            registerController.role.value = Roles.values
+                                    .where((role) => role.name == value)
+                                    .toList()[0]
+                                    .index +
+                                1;
                           },
                           closedBorder: Border.all(
                             color: AppColors.primarySplash,
@@ -190,11 +237,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           height: 50,
                           width: width,
-                          child: LargeButton(
+                          child: LoadingButton(
                             text: 'Register',
-                            onPress: () {
-                              _registerFormKey.currentState!.validate();
-                            },
+                            onPress: handleRegister,
                           ),
                         ),
                         const SizedBox(

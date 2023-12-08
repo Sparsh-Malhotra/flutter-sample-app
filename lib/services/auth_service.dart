@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:pathshala/core/models/api_error_model.dart';
 import 'package:pathshala/pages/login/models/login_model.dart';
+import 'package:pathshala/pages/register/models/register_model.dart';
 
 class AuthService {
   final Dio _dio = Dio(
@@ -30,7 +31,40 @@ class AuthService {
     } on DioException catch (e) {
       // Handle Dio errors separately
       if (e.response?.statusCode == 401) {
-        const errorMessage = 'Invalid credentials. Please try again.';
+        const errorMessage = 'Invalid credentials.';
+        throw Exception(errorMessage);
+      } else {
+        const errorMessage = 'Unexpected error occurred';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      // Handle other exceptions
+      const errorMessage = 'Unexpected error occurred';
+      throw Exception(errorMessage);
+    }
+  }
+
+  Future<RegisterModel> register(FormData formData) async {
+    try {
+      final response = await _dio.post(
+        '/register/',
+        data: formData,
+      );
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        return RegisterModel.fromJson(response.data);
+      } else {
+        return RegisterModel(
+          status: 'error',
+          message: '',
+          data: {},
+          error: ApiError.fromJson(response.data['error'] ?? {}),
+        );
+      }
+    } on DioException catch (e) {
+      // Handle Dio errors separately
+      if (e.response?.statusCode == 401) {
+        const errorMessage = 'Invalid credentials.';
         throw Exception(errorMessage);
       } else {
         const errorMessage = 'Unexpected error occurred';

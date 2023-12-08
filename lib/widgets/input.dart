@@ -13,6 +13,7 @@ Widget inputFile({
   String? value,
   TextEditingController? controller,
   void Function(String)? onChange,
+  void Function(String?)? onSave,
   String? Function(String?)? validator,
 }) {
   return Column(
@@ -47,6 +48,7 @@ Widget inputFile({
         keyboardType: keyboardType,
         onTap: onTap,
         onChanged: onChange,
+        onSaved: onSave,
         decoration: InputDecoration(
           suffixIcon: suffixIcon,
           contentPadding:
