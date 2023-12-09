@@ -113,12 +113,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: AppColors.primary,
                             ),
                             onTap: () async {
-                              final selectedDate = await DatePicker()
-                                      .buildMaterialDatePicker(context) ??
-                                  DateTime.now();
-                              print(selectedDate);
-                              registerController.dob.value =
-                                  DateFormat('dd/MM/yyyy').format(selectedDate);
+                              final selectedDate =
+                                  await DatePicker().buildDatePicker(
+                                context,
+                                DateFormat('dd/MM/yyyy')
+                                    .parse(registerController.dob.value),
+                              );
+                              if (selectedDate != null) {
+                                registerController.dob.value =
+                                    DateFormat('dd/MM/yyyy')
+                                        .format(selectedDate);
+                              }
                             },
                             value: registerController.dob.value,
                           );

@@ -2,11 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:pathshala/core/models/api_error_model.dart';
 import 'package:pathshala/pages/login/models/login_model.dart';
 import 'package:pathshala/pages/register/models/register_model.dart';
+import 'package:pathshala/services/dio_client.dart';
 
 class AuthService {
-  final Dio _dio = Dio(
-    BaseOptions(baseUrl: 'http://184.72.203.57:9000/pathshala'),
-  );
+  final Dio _dio = DioClient.instance;
 
   Future<LoginModel> login(String username, String password) async {
     try {

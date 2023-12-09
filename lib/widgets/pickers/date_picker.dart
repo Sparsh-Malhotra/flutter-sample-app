@@ -4,30 +4,51 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DatePicker extends GetxController {
-  buildCupertinoDatePicker(BuildContext context) async {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext builder) {
-          return Container(
-            height: MediaQuery.of(context).copyWith().size.height / 3,
-            color: Colors.white,
-            child: CupertinoDatePicker(
-              mode: CupertinoDatePickerMode.date,
-              onDateTimeChanged: (picked) {},
-              initialDateTime: DateTime.now(),
-              minimumYear: 2000,
-              maximumYear: 2035,
-            ),
-          );
-        });
+  Future<DateTime?> buildDatePicker(
+      BuildContext context, DateTime selectedDate) async {
+    DateTime? pickedDate;
+    if (Theme.of(context).platform == TargetPlatform.iOS) {
+      pickedDate = await buildCupertinoDatePicker(context, selectedDate);
+    } else {
+      pickedDate = await buildMaterialDatePicker(context, selectedDate);
+    }
+    return pickedDate;
+  }
+
+  Future<DateTime?> buildCupertinoDatePicker(
+    BuildContext context,
+    DateTime selectedDate,
+  ) async {
+    DateTime? pickedDate;
+    await showModalBottomSheet(
+      context: context,
+      builder: (BuildContext builder) {
+        return Container(
+          height: MediaQuery.of(context).copyWith().size.height / 3,
+          color: Colors.white,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            onDateTimeChanged: (picked) {
+              pickedDate = picked;
+            },
+            initialDateTime: selectedDate,
+            minimumYear: 2000,
+            maximumYear: 2035,
+          ),
+        );
+      },
+    );
+    return pickedDate;
   }
 
   Future<DateTime?> buildMaterialDatePicker(
     BuildContext context,
+    DateTime selectedDate,
   ) async {
     return await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      currentDate: DateTime.now(),
+      initialDate: selectedDate,
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
       initialEntryMode: DatePickerEntryMode.calendar,

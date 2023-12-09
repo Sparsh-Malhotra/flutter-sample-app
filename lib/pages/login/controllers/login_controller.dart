@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pathshala/pages/login/models/login_model.dart';
-import 'package:pathshala/services/auth_service.dart';
+import 'package:pathshala/services/api/auth_service.dart';
 
 class LoginController extends GetxController {
   TextEditingController usernameController = TextEditingController();

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide FormData;
 import 'package:intl/intl.dart';
 import 'package:pathshala/pages/register/models/register_model.dart';
-import 'package:pathshala/services/auth_service.dart';
+import 'package:pathshala/services/api/auth_service.dart';
 
 class RegisterController extends GetxController {
   RxString firstName = ''.obs;
