@@ -45,3 +45,15 @@ formatDate(String? date) {
   String formattedDate = format.format(dateTime);
   return formattedDate;
 }
+
+void showErrorMessage(String message) {
+  Get.snackbar(
+    'Error',
+    message,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: Colors.redAccent,
+    colorText: Colors.white,
+    duration: const Duration(milliseconds: 2000),
+    margin: const EdgeInsets.all(15),
+  );
+}

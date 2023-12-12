@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pathshala/pages/login/models/login_model.dart';
 import 'package:pathshala/services/api/auth_service.dart';
+import 'package:pathshala/utils/functions.dart';
 
 class LoginController extends GetxController {
   TextEditingController usernameController = TextEditingController();
@@ -32,17 +33,5 @@ class LoginController extends GetxController {
     } finally {
       isLoading.toggle();
     }
-  }
-
-  void showErrorMessage(String message) {
-    Get.snackbar(
-      'Error',
-      message,
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.redAccent,
-      colorText: Colors.white,
-      duration: const Duration(milliseconds: 2000),
-      margin: const EdgeInsets.all(15),
-    );
   }
 }

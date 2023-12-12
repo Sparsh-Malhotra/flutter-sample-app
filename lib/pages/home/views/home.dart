@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pathshala/pages/home/controllers/home_controller.dart';
+import 'package:pathshala/pages/home/models/session_model.dart';
 import 'package:pathshala/services/api/user_service.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/app_text_styles.dart';
@@ -32,16 +34,24 @@ class _HomeScreenState extends State<HomeScreen> {
   HomeController dashboardC = Get.put(HomeController());
   final UserService _userService = UserService();
 
-  Future<void> _loadUserDetails() async {
+  Future<void> fetchData() async {
     try {
       isLoading.value = true;
-      final userDetails = await _userService.getUserDetails();
 
-      // Store user details in GetStorage
-      GetStorage().write('user_details', userDetails.toJson());
+      final List<Future<dynamic>> futures = [_userService.getSessions('sss')];
+      if (!GetStorage().hasData('user_details')) {
+        futures.add(_userService.getUserDetails());
+      }
+
+      final responses = await Future.wait<dynamic>(futures);
+      dashboardC.sessions.value = responses[0];
+      if (responses.length > 1) {
+        GetStorage().write('user_details', responses[1].toJson());
+      }
+    } on DioException catch (e) {
+      handleDioError(e);
     } catch (e) {
-      // Handle errors
-      print('Error loading user details: $e');
+      print(e);
     } finally {
       isLoading.value = false;
     }
@@ -80,10 +90,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void handleDioError(DioException error) {
+    final message =
+        error.response?.data['error']['details'] ?? 'An error occurred';
+    showErrorMessage(message);
+  }
+
   @override
   void initState() {
     super.initState();
-    if (!GetStorage().hasData('user_details')) _loadUserDetails();
+    fetchData();
   }
 
   @override
@@ -156,15 +172,26 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           Text(
                             'Mark Attendance',
                             style: AppTextStyle.boldBlack18,
                           ),
                           ListView.builder(
                             shrinkWrap: true,
-                            itemCount: classes.length,
+                            itemCount: dashboardC.sessions.value.length,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
+                              final sessionName = dashboardC
+                                  .sessions
+                                  .value[index]
+                                  .bhaagClassSection
+                                  .bhaagClass
+                                  .bhaagCategory
+                                  .bhaag
+                                  .name;
                               return ActionCard(
                                 width: width,
                                 height: 70,
@@ -174,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        'Class ${classes[index]}',
+                                        sessionName,
                                         style: AppTextStyle.mediumBlack18,
                                       ),
                                     ),
@@ -185,6 +212,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 'attendance',
                                                 parameters: {
                                                   'canEdit': 'false',
+                                                  'bhaag_class_section_id':
+                                                      dashboardC
+                                                          .sessions
+                                                          .value[index]
+                                                          .bhaagClassSection
+                                                          .id
+                                                          .toString(),
+                                                  'session_id': dashboardC
+                                                      .sessions.value[index].id
+                                                      .toString(),
                                                 },
                                               )
                                             },
@@ -201,6 +238,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 '/attendance',
                                                 parameters: {
                                                   'canEdit': 'true',
+                                                  'bhaag_class_section_id':
+                                                      dashboardC
+                                                          .sessions
+                                                          .value[index]
+                                                          .bhaagClassSection
+                                                          .id
+                                                          .toString(),
+                                                  'session_id': dashboardC
+                                                      .sessions.value[index].id
+                                                      .toString(),
                                                 },
                                               ),
                                             },

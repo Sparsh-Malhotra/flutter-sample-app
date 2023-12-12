@@ -1,7 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pathshala/pages/attendance/models/student.dart';
+import 'package:pathshala/pages/attendance/models/attendee.dart';
 import 'package:pathshala/pages/attendance/views/attendace_card.dart';
+import 'package:pathshala/services/api/attendance_service.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/app_text_styles.dart';
 import 'package:pathshala/utils/curves/small_curve.dart';
@@ -11,6 +13,8 @@ import 'package:pathshala/widgets/large_button.dart';
 class AttendanceScreen extends StatefulWidget {
   AttendanceScreen({super.key, this.canEdit = true});
   bool canEdit = Get.parameters['canEdit'] == 'true';
+  String? bhaag_class_section_id = Get.parameters['bhaag_class_section_id'];
+  String? session_id = Get.parameters['session_id'];
 
   @override
   State<AttendanceScreen> createState() {
@@ -19,22 +23,69 @@ class AttendanceScreen extends StatefulWidget {
 }
 
 class _AttendanceScreenState extends State<AttendanceScreen> {
-  static List<Student> students = [
-    Student(name: 'Sparsh', alias: 'Sasta Larry Page'),
-    Student(name: 'Harshit'),
-  ];
+  final RxBool isLoading = false.obs;
+
+  final AttendanceService _attendanceService = AttendanceService();
+
+  late final Rx<List<Attendee>> students;
+
+  @override
+  void initState() {
+    super.initState();
+    students = Rx<List<Attendee>>([]);
+    fetchStudents();
+  }
+
+  Future<void> fetchStudents() async {
+    try {
+      isLoading.value = true;
+
+      final response = await _attendanceService
+          .getStudents(widget.bhaag_class_section_id ?? '');
+
+      if (response.status == 'success') {
+        List<Attendee> temp = [];
+        response.data.forEach(
+          (element) {
+            temp.add(
+              Attendee(
+                id: element.id.toString(),
+                name:
+                    '${element.profile['first_name']} ${element.profile['middle_name'] != null ? '${element.profile['middle_name'] + ' '}' : ''}${element.profile['last_name'] ?? ''}',
+                alias: element.profile['alias'],
+              ),
+            );
+          },
+        );
+        students.value = temp;
+      }
+    } on DioException catch (e) {
+      print(e);
+      handleDioError(e);
+    } catch (e) {
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void handleDioError(DioException error) {
+    final message =
+        error.response?.data['error']['details'] ?? 'An error occurred';
+    showErrorMessage(message);
+  }
 
   void handleChangeAttendance(bool value, int index) {
-    List<Student> temp = students;
+    List<Attendee> temp = students.value;
     temp[index].isPresent = value;
-    setState(() {
-      students = temp;
-    });
+    students.value = temp;
   }
 
   Future<dynamic> Function() showAttendancePreview = () {
-    List<Student> present = students.where((stud) => stud.isPresent).toList();
-    List<Student> absent = students.where((stud) => !stud.isPresent).toList();
+    List<Attendee> present =
+        students.value.where((stud) => stud.isPresent).toList();
+    List<Attendee> absent =
+        students.value.where((stud) => !stud.isPresent).toList();
 
     return Get.dialog(
       Dialog(
@@ -62,7 +113,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     style: AppTextStyle.boldBlack16,
                   ),
                   Text(
-                    '${students.length}',
+                    '${students.value.length}',
                     style: AppTextStyle.mediumBlack16,
                   ),
                 ],
@@ -114,67 +165,78 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     double topBarHeight = 135;
 
     return Scaffold(
-      body: Stack(
-        children: [
-          SizedBox(
-            height: height,
-            width: width,
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.only(
-                  left: 20, right: 20, top: 132, bottom: 20),
-              children: [
-                ListView.builder(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: students.length,
-                  itemBuilder: (context, index) => AttendanceCard(
-                    name: students[index].name,
-                    alias: students[index].alias,
-                    isPresent: students[index].isPresent,
-                    onChangeAttendance: (value) {
-                      handleChangeAttendance(value, index);
-                    },
+      body: Obx(
+        () {
+          print('rerender');
+          return isLoading.value
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.primary,
                   ),
-                ),
-                widget.canEdit
-                    ? Row(
+                )
+              : Stack(
+                  children: [
+                    SizedBox(
+                      height: height,
+                      width: width,
+                      child: ListView(
+                        physics: const BouncingScrollPhysics(),
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, top: 132, bottom: 20),
                         children: [
-                          Expanded(
-                            child: LargeButton(
-                              text: 'Preview',
-                              height: 55,
-                              onPress: () {
-                                showAttendancePreview();
+                          ListView.builder(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: students.value.length,
+                            itemBuilder: (context, index) => AttendanceCard(
+                              name: students.value[index].name,
+                              alias: students.value[index].alias,
+                              isPresent: students.value[index].isPresent,
+                              onChangeAttendance: (value) {
+                                handleChangeAttendance(value, index);
                               },
                             ),
                           ),
-                          const SizedBox(
-                            width: 14,
-                          ),
-                          Expanded(
-                            child: LargeButton(
-                              text: 'Upload',
-                              height: 55,
-                              onPress: () {},
-                            ),
-                          ),
+                          widget.canEdit
+                              ? Row(
+                                  children: [
+                                    Expanded(
+                                      child: LargeButton(
+                                        text: 'Preview',
+                                        height: 55,
+                                        onPress: () {
+                                          showAttendancePreview();
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 14,
+                                    ),
+                                    Expanded(
+                                      child: LargeButton(
+                                        text: 'Upload',
+                                        height: 55,
+                                        onPress: () {},
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Container(),
                         ],
-                      )
-                    : Container(),
-              ],
-            ),
-          ),
-          CustomPaint(
-            size: Size(width, topBarHeight), // small 135, medium 155
-            painter: SmallCurve(),
-            child: appBar(
-              'Attendance',
-              topBarHeight,
-            ),
-          ),
-        ],
+                      ),
+                    ),
+                    CustomPaint(
+                      size: Size(width, topBarHeight), // small 135, medium 155
+                      painter: SmallCurve(),
+                      child: appBar(
+                        'Attendance',
+                        topBarHeight,
+                      ),
+                    ),
+                  ],
+                );
+        },
       ),
     );
   }

@@ -1,7 +1,48 @@
-class Student {
-  Student({required this.name, this.alias, this.isPresent = false});
+import 'package:pathshala/core/models/api_error_model.dart';
 
-  String name;
-  String? alias;
-  bool isPresent;
+class SessionStudent {
+  String status;
+  String message;
+  List<SessionStudentData> data;
+  ApiError error;
+
+  SessionStudent({
+    required this.status,
+    required this.message,
+    required this.data,
+    required this.error,
+  });
+
+  factory SessionStudent.fromJson(Map<String, dynamic> json) {
+    List<SessionStudentData> dataList = [];
+    if (json['data'] != null) {
+      dataList = (json['data'] as List)
+          .map((data) => SessionStudentData.fromJson(data))
+          .toList();
+    }
+
+    return SessionStudent(
+      status: json['status'],
+      message: json['message'],
+      data: dataList,
+      error: ApiError.fromJson(json['error'] ?? {}),
+    );
+  }
+}
+
+class SessionStudentData {
+  int id;
+  Map<dynamic, dynamic> profile;
+
+  SessionStudentData({
+    required this.id,
+    required this.profile,
+  });
+
+  factory SessionStudentData.fromJson(Map<String, dynamic> json) {
+    return SessionStudentData(
+      id: json['id'],
+      profile: json['profile'],
+    );
+  }
 }
