@@ -11,6 +11,13 @@ class LoginController extends GetxController {
   final AuthService _authService = AuthService();
   final RxBool isLoading = false.obs;
 
+  @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   Future<void> login() async {
     final String username = usernameController.text;
     final String password = passwordController.text;

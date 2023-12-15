@@ -20,8 +20,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 2500)).then((value) =>
         GetStorage().hasData('access_token')
-            ? Get.toNamed('/home')
-            : Get.toNamed('/login'));
+            ? Get.offNamed('/home')
+            : Get.offNamed('/login'));
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
