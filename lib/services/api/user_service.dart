@@ -29,7 +29,7 @@ class UserService {
   Future<List<SessionModel>> getSessions(String date) async {
     try {
       final response =
-          await _dio.get('/session/', queryParameters: {date: date});
+          await _dio.get('/session/', queryParameters: {'date': date});
 
       if (response.statusCode == 200) {
         final data = response.data['data'] as List<dynamic>;

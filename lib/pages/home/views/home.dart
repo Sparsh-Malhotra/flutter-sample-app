@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
+import 'package:pathshala/app_contants.dart';
 import 'package:pathshala/pages/home/controllers/home_controller.dart';
-import 'package:pathshala/pages/home/models/session_model.dart';
 import 'package:pathshala/services/api/user_service.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/app_text_styles.dart';
@@ -38,7 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       isLoading.value = true;
 
-      final List<Future<dynamic>> futures = [_userService.getSessions('sss')];
+      final List<Future<dynamic>> futures = [
+        _userService.getSessions(
+          DateFormat('yyyy-MM-dd').format(dashboardC.selectedDate.value),
+        )
+      ];
       if (!GetStorage().hasData('user_details')) {
         futures.add(_userService.getUserDetails());
       }
@@ -99,6 +104,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    ever(dashboardC.selectedDate, (_) {
+      fetchData();
+    });
     fetchData();
   }
 
@@ -112,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Obx(
         () {
           final userDetails = GetStorage().read('user_details');
+          print(userDetails);
           return isLoading.value || userDetails == null
               ? const Center(
                   child: CircularProgressIndicator(
@@ -279,25 +288,40 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: CircleAvatar(
                               backgroundColor:
                                   AppColors.secondary.withOpacity(0.5),
-                              backgroundImage: const NetworkImage(
-                                  'https://i.pravatar.cc/300'),
+                              backgroundImage: NetworkImage(
+                                userDetails['profile']['profile_picture'] == ''
+                                    ? genderPlaceholderImages['Male']
+                                    : userDetails['profile']['profile_picture'],
+                              ),
                               radius: 24,
                             ),
                           ),
-                          title: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                '${userDetails['profile']['first_name']} ${userDetails['profile']['last_name']}',
-                                style: AppTextStyle.mediumBlack18
-                                    .copyWith(color: AppColors.white),
-                              ),
-                              Text(
-                                'English Department',
-                                style: AppTextStyle.regularWhite14,
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${userDetails['profile']['first_name']} ${userDetails['profile']['last_name']}',
+                                    style: AppTextStyle.mediumBlack18
+                                        .copyWith(color: AppColors.white),
+                                  ),
+                                  Text(
+                                    '${Roles.values[userDetails['profile']['groups'][0]].name}',
+                                    style: AppTextStyle.regularWhite14,
+                                  ),
+                                ],
                               ),
                             ],
+                          ),
+                          trailing: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.logout,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),

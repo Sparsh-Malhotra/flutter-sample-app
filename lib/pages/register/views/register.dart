@@ -103,31 +103,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             return null;
                           },
                         ),
-                        Obx(() {
-                          // debugPrint('reload');
-                          return inputFile(
-                            label: 'Date of birth',
-                            readOnly: true,
-                            suffixIcon: const Icon(
-                              Icons.calendar_month,
-                              color: AppColors.primary,
-                            ),
-                            onTap: () async {
-                              final selectedDate =
-                                  await DatePicker().buildDatePicker(
-                                context,
-                                DateFormat('dd/MM/yyyy')
-                                    .parse(registerController.dob.value),
-                              );
-                              if (selectedDate != null) {
-                                registerController.dob.value =
-                                    DateFormat('dd/MM/yyyy')
-                                        .format(selectedDate);
-                              }
-                            },
-                            value: registerController.dob.value,
-                          );
-                        }),
+                        Obx(
+                          () {
+                            // debugPrint('reload');
+                            return inputFile(
+                              label: 'Date of birth',
+                              readOnly: true,
+                              suffixIcon: const Icon(
+                                Icons.calendar_month,
+                                color: AppColors.primary,
+                              ),
+                              onTap: () async {
+                                final selectedDate =
+                                    await DatePicker().buildDatePicker(
+                                  context,
+                                  DateFormat('dd/MM/yyyy')
+                                      .parse(registerController.dob.value),
+                                );
+                                if (selectedDate != null) {
+                                  registerController.dob.value =
+                                      DateFormat('dd/MM/yyyy')
+                                          .format(selectedDate);
+                                }
+                              },
+                              value: registerController.dob.value,
+                            );
+                          },
+                        ),
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
@@ -149,6 +151,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           hintBuilder: (ctx, text) => Text(text),
                           headerBuilder: (ctx, text) => Text(text),
+                        ),
+                        Align(
+                            alignment: Alignment.topLeft,
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Gender',
+                                  style: AppTextStyle.regularBlack16,
+                                ),
+                                Text(
+                                  '*',
+                                  style: const TextStyle().copyWith(
+                                    color: Colors.redAccent,
+                                  ),
+                                )
+                              ],
+                            )),
+                        CustomDropdown<String>(
+                          hintText: '',
+                          items: genderOptions,
+                          onChanged: (value) {
+                            registerController.gender.value = value;
+                          },
+                          closedBorder: Border.all(
+                            color: AppColors.primarySplash,
+                          ),
+                          expandedBorder: Border.all(
+                            color: AppColors.primary,
+                          ),
+                          hintBuilder: (ctx, text) => Text(text),
+                          headerBuilder: (ctx, text) => Text(text),
+                          validator: (value) {
+                            if (value == null) {
+                              return "Please select a gender";
+                            }
+                            return null;
+                          },
+                          errorStyle: const TextStyle().copyWith(
+                            fontSize: 12,
+                          ),
                         ),
                         inputFile(
                           label: 'Phone',

@@ -12,6 +12,7 @@ class RegisterController extends GetxController {
   RxString dob = DateFormat('dd/MM/yyyy').format(DateTime.now()).obs;
   RxString phone = ''.obs;
   RxString email = ''.obs;
+  Rxn<String> gender = Rxn<String>(null);
   RxString username = ''.obs;
   RxString password = ''.obs;
   Rxn<int> role = Rxn<int>(null);
@@ -21,20 +22,23 @@ class RegisterController extends GetxController {
   final RxBool isLoading = false.obs;
 
   Future<void> register() async {
-    final FormData formData = FormData.fromMap({
-      'username': username.value,
-      'password': password.value,
-      'profile.first_name': firstName.value,
-      'profile.middle_name': middleName.value,
-      'profile.last_name': lastName.value,
-      'profile.groups': role.value,
-      'profile.dob': DateFormat('yyyy-MM-dd').format(
-        DateFormat('dd/MM/yyyy').parse(dob.value),
-      ),
-      'profile.phone': phone.value,
-      'profile.email': email.value,
-      'profile.blood_group': bloodGroup.value,
-    });
+    final FormData formData = FormData.fromMap(
+      {
+        'username': username.value,
+        'password': password.value,
+        'profile.first_name': firstName.value,
+        'profile.middle_name': middleName.value,
+        'profile.last_name': lastName.value,
+        'profile.groups': role.value,
+        'profile.dob': DateFormat('yyyy-MM-dd').format(
+          DateFormat('dd/MM/yyyy').parse(dob.value),
+        ),
+        'profile.phone': phone.value,
+        'profile.email': email.value,
+        'profile.blood_group': bloodGroup.value,
+        'profile.gender': gender.value,
+      },
+    );
 
     try {
       final RegisterModel registerResponse =
