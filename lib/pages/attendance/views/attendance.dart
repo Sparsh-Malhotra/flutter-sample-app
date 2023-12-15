@@ -9,6 +9,7 @@ import 'package:pathshala/utils/app_text_styles.dart';
 import 'package:pathshala/utils/curves/small_curve.dart';
 import 'package:pathshala/utils/functions.dart';
 import 'package:pathshala/widgets/large_button.dart';
+import 'package:pathshala/widgets/loading_button.dart';
 
 class AttendanceScreen extends StatefulWidget {
   AttendanceScreen({super.key, this.canEdit = true});
@@ -24,9 +25,7 @@ class AttendanceScreen extends StatefulWidget {
 
 class _AttendanceScreenState extends State<AttendanceScreen> {
   final RxBool isLoading = false.obs;
-
   final AttendanceService _attendanceService = AttendanceService();
-
   late final Rx<List<Attendee>> students;
 
   @override
@@ -39,24 +38,20 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   Future<void> fetchStudents() async {
     try {
       isLoading.value = true;
-
       final response = await _attendanceService
           .getStudents(widget.bhaag_class_section_id ?? '');
 
       if (response.status == 'success') {
-        List<Attendee> temp = [];
-        response.data.forEach(
-          (element) {
-            temp.add(
-              Attendee(
-                id: element.id.toString(),
-                name:
-                    '${element.profile['first_name']} ${element.profile['middle_name'] != null ? '${element.profile['middle_name'] + ' '}' : ''}${element.profile['last_name'] ?? ''}',
-                alias: element.profile['alias'],
-              ),
-            );
-          },
-        );
+        List<Attendee> temp = response.data.map((element) {
+          return Attendee(
+            id: element.id.toString(),
+            name:
+                '${element.profile['first_name']} ${element.profile['middle_name'] != null ? '${element.profile['middle_name'] + ' '}' : ''}${element.profile['last_name'] ?? ''}',
+            alias: element.profile['alias'],
+            isPresent: false,
+          );
+        }).toList();
+
         students.value = temp;
       }
     } on DioException catch (e) {
@@ -76,18 +71,18 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   }
 
   void handleChangeAttendance(bool value, int index) {
-    List<Attendee> temp = students.value;
+    List<Attendee> temp = List.from(students.value);
     temp[index].isPresent = value;
     students.value = temp;
   }
 
-  Future<dynamic> Function() showAttendancePreview = () {
+  Future<void> showAttendancePreview() async {
     List<Attendee> present =
         students.value.where((stud) => stud.isPresent).toList();
     List<Attendee> absent =
         students.value.where((stud) => !stud.isPresent).toList();
 
-    return Get.dialog(
+    await Get.dialog(
       Dialog(
         backgroundColor: AppColors.white,
         child: Container(
@@ -156,7 +151,30 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
         ),
       ),
     );
-  };
+  }
+
+  Future<void> handleMarkAttendance() async {
+    try {
+      List<Attendee> present =
+          students.value.where((stud) => stud.isPresent).toList();
+      final response = await _attendanceService.markAttendance(
+        {
+          'session_id': widget.session_id,
+          'students_ids':
+              present.where((e) => e.isPresent).map((e) => e.id).toList(),
+        },
+      );
+
+      if (response.status == 'success') {
+        Get.toNamed('/home');
+      }
+    } on DioException catch (e) {
+      print(e);
+      handleDioError(e);
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +185,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     return Scaffold(
       body: Obx(
         () {
-          print('rerender');
           return isLoading.value
               ? const Center(
                   child: CircularProgressIndicator(
@@ -205,19 +222,19 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                       child: LargeButton(
                                         text: 'Preview',
                                         height: 55,
-                                        onPress: () {
-                                          showAttendancePreview();
-                                        },
+                                        onPress: showAttendancePreview,
                                       ),
                                     ),
                                     const SizedBox(
                                       width: 14,
                                     ),
                                     Expanded(
-                                      child: LargeButton(
-                                        text: 'Upload',
+                                      child: SizedBox(
                                         height: 55,
-                                        onPress: () {},
+                                        child: LoadingButton(
+                                          text: 'Upload',
+                                          onPress: handleMarkAttendance,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -227,7 +244,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                       ),
                     ),
                     CustomPaint(
-                      size: Size(width, topBarHeight), // small 135, medium 155
+                      size: Size(width, topBarHeight),
                       painter: SmallCurve(),
                       child: appBar(
                         'Attendance',
