@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:pathshala/app_contants.dart';
 import 'package:pathshala/pages/attendance/models/attendee.dart';
 import 'package:pathshala/pages/attendance/models/student.dart';
 import 'package:pathshala/pages/attendance/views/attendace_card.dart';
@@ -13,6 +14,7 @@ import 'package:pathshala/utils/curves/small_curve.dart';
 import 'package:pathshala/utils/functions.dart';
 import 'package:pathshala/widgets/large_button.dart';
 import 'package:pathshala/widgets/loading_button.dart';
+import 'package:pathshala/widgets/widget_with_role.dart';
 
 class AttendanceScreen extends StatefulWidget {
   AttendanceScreen({super.key, this.canEdit = true});
@@ -211,6 +213,32 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     }
   }
 
+  Widget footerButtons() {
+    return Row(
+      children: [
+        Expanded(
+          child: LargeButton(
+            text: 'Preview',
+            height: 55,
+            onPress: showAttendancePreview,
+          ),
+        ),
+        const SizedBox(
+          width: 14,
+        ),
+        Expanded(
+          child: SizedBox(
+            height: 55,
+            child: LoadingButton(
+              text: 'Submit',
+              onPress: handleMarkAttendance,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -253,30 +281,11 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                             ),
                           ),
                           widget.canEdit
-                              ? Row(
-                                  children: [
-                                    Expanded(
-                                      child: LargeButton(
-                                        text: 'Preview',
-                                        height: 55,
-                                        onPress: showAttendancePreview,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 14,
-                                    ),
-                                    Expanded(
-                                      child: SizedBox(
-                                        height: 55,
-                                        child: LoadingButton(
-                                          text: 'Submit',
-                                          onPress: handleMarkAttendance,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              : Container(),
+                              ? footerButtons()
+                              : WidgetWithRole(
+                                  allowedRoles: const [Roles.admin],
+                                  child: footerButtons(),
+                                ),
                         ],
                       ),
                     ),

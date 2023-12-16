@@ -50,8 +50,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(
                     width: width,
-                    child: Image.asset('assets/images/background_vector.png',
-                        fit: BoxFit.fitWidth),
+                    child: Image.asset(
+                      'assets/images/background_vector.png',
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                   Image.asset(
                     'assets/images/logo_white.png',

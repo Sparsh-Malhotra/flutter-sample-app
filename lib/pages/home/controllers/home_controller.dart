@@ -13,19 +13,24 @@ class HomeController extends GetxController {
 
   Future<void> logoutHandler() async {
     try {
-      isLogoutLoading.value = true;
-      String refreshToken = GetStorage().read('refresh_token');
-      final GenericApiResponse logoutResponse =
-          await _authService.logout(refreshToken);
+      if (GetStorage().hasData('refresh_token')) {
+        isLogoutLoading.value = true;
+        String refreshToken = GetStorage().read('refresh_token');
+        final GenericApiResponse logoutResponse =
+            await _authService.logout(refreshToken);
 
-      if (logoutResponse.status == 'success') {
-        GetStorage().remove('access_token');
-        GetStorage().remove('refresh_token');
+        if (logoutResponse.status == 'success') {
+          GetStorage().remove('access_token');
+          GetStorage().remove('refresh_token');
+          GetStorage().remove('user_details');
+          Get.offNamed('/login');
+        } else {
+          final errorMessage = logoutResponse.error.message;
+          showErrorMessage(errorMessage);
+        }
+      } else {
         GetStorage().remove('user_details');
         Get.offNamed('/login');
-      } else {
-        final errorMessage = logoutResponse.error.message;
-        showErrorMessage(errorMessage);
       }
     } on Exception catch (e) {
       showErrorMessage(e.toString());
