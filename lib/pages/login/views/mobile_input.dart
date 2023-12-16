@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:pathshala/pages/home/models/user_details_model.dart';
 import 'package:pathshala/pages/login/controllers/login_controller.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/widgets/large_outlined_button.dart';
@@ -167,7 +169,29 @@ class _MobileInputState extends State<MobileInput> {
                   child: LargeOutlinedButton(
                     text: 'Continue as Guest',
                     onPress: () {
-                      Get.toNamed('/home');
+                      GetStorage().write(
+                        'user_details',
+                        UserDetailsModel(
+                          id: 0,
+                          username: '',
+                          email: '',
+                          profile: UserProfile(
+                            id: 0,
+                            firstName: 'Guest',
+                            middleName: '',
+                            lastName: 'User',
+                            dob: '',
+                            phone: '',
+                            alias: '',
+                            email: '',
+                            bloodGroup: '',
+                            profilePicture: '',
+                            gender: '',
+                            groups: [0],
+                          ),
+                        ).toJson(),
+                      );
+                      Get.offNamed('/home');
                     },
                   ),
                 ),

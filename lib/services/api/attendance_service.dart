@@ -48,4 +48,28 @@ class AttendanceService {
       );
     }
   }
+
+  Future<PresentAttendeesResponse> getPresentAttendees(
+      String date, String bhaagClassSectionId) async {
+    try {
+      final response = await _dio.get('/attendance/', queryParameters: {
+        'date': date,
+        'bhaag_class_section_id': bhaagClassSectionId,
+      });
+
+      if (response.statusCode == 200) {
+        return PresentAttendeesResponse.fromJson(response.data);
+      } else {
+        throw DioException(
+          response: response,
+          requestOptions: RequestOptions(path: '/attendance/'),
+        );
+      }
+    } catch (e) {
+      throw DioException(
+        error: e.toString(),
+        requestOptions: RequestOptions(path: '/attendance/'),
+      );
+    }
+  }
 }

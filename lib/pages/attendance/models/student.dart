@@ -46,3 +46,25 @@ class SessionStudentData {
     );
   }
 }
+
+class PresentAttendeesResponse {
+  String status;
+  String message;
+  List<dynamic> data;
+  ApiError error;
+
+  PresentAttendeesResponse(
+      {required this.status,
+      required this.message,
+      required this.data,
+      required this.error});
+
+  factory PresentAttendeesResponse.fromJson(Map<String, dynamic> json) {
+    return PresentAttendeesResponse(
+      status: json['status'],
+      message: json['message'],
+      data: json['data'],
+      error: ApiError.fromJson(json['error'] ?? {}),
+    );
+  }
+}

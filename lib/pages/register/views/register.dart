@@ -160,12 +160,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   'Gender',
                                   style: AppTextStyle.regularBlack16,
                                 ),
-                                Text(
-                                  '*',
-                                  style: const TextStyle().copyWith(
-                                    color: Colors.redAccent,
-                                  ),
-                                )
+                                // Text(
+                                //   '*',
+                                //   style: const TextStyle().copyWith(
+                                //     color: Colors.redAccent,
+                                //   ),
+                                // )
                               ],
                             )),
                         CustomDropdown<String>(
@@ -182,12 +182,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           hintBuilder: (ctx, text) => Text(text),
                           headerBuilder: (ctx, text) => Text(text),
-                          validator: (value) {
-                            if (value == null) {
-                              return "Please select a gender";
-                            }
-                            return null;
-                          },
+                          // validator: (value) {
+                          //   if (value == null) {
+                          //     return "Please select a gender";
+                          //   }
+                          //   return null;
+                          // },
                           errorStyle: const TextStyle().copyWith(
                             fontSize: 12,
                           ),
@@ -252,13 +252,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         CustomDropdown<String>(
                           hintText: 'Select role',
-                          items: Roles.values.map((e) => e.name).toList(),
+                          items: Roles.values
+                              .where((role) => role.id != 0)
+                              .map((e) => e.name)
+                              .toList(),
                           onChanged: (value) {
                             registerController.role.value = Roles.values
-                                    .where((role) => role.name == value)
-                                    .toList()[0]
-                                    .index +
-                                1;
+                                .where((role) => role.name == value)
+                                .toList()[0]
+                                .id;
                           },
                           closedBorder: Border.all(
                             color: AppColors.primarySplash,

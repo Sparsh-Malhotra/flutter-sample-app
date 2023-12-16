@@ -53,4 +53,25 @@ class UserService {
       );
     }
   }
+
+  Future<UserDetailsModel> updateProfile(Map<String, dynamic> data) async {
+    try {
+      FormData formData = FormData.fromMap(data);
+      final response = await _dio.patch('/profile/', data: formData);
+
+      if (response.statusCode == 200) {
+        return UserDetailsModel.fromJson(response.data);
+      } else {
+        throw DioException(
+          response: response,
+          requestOptions: RequestOptions(path: '/session/'),
+        );
+      }
+    } catch (e) {
+      throw DioException(
+        error: e.toString(),
+        requestOptions: RequestOptions(path: '/session/'),
+      );
+    }
+  }
 }
