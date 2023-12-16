@@ -157,7 +157,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             allowedRoles: const [
                               Roles.mentor,
                               Roles.admin,
-                              Roles.coMentor
                             ],
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
