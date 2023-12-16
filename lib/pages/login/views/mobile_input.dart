@@ -167,7 +167,7 @@ class _MobileInputState extends State<MobileInput> {
                   child: LargeOutlinedButton(
                     text: 'Continue as Guest',
                     onPress: () {
-                      Get.toNamed('/home');
+                      // Get.toNamed('/home');
                     },
                   ),
                 ),

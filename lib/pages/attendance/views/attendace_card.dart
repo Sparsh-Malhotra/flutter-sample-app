@@ -1,27 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pathshala/pages/home/models/user_details_model.dart';
+import 'package:pathshala/services/api/user_service.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/app_text_styles.dart';
+import 'package:pathshala/utils/functions.dart';
 import 'package:pathshala/widgets/cards/action_card.dart';
 
 class AttendanceCard extends StatefulWidget {
-  AttendanceCard(
-      {super.key,
-      required this.name,
-      this.alias,
-      required this.isPresent,
-      required this.onChangeAttendance});
+  AttendanceCard({
+    super.key,
+    required this.name,
+    this.alias,
+    required this.isPresent,
+    required this.profileId,
+    required this.onChangeAttendance,
+    required this.onChangeAlias,
+  });
 
   final String name;
   final String? alias;
   final bool isPresent;
+  final String profileId;
   void Function(bool value) onChangeAttendance;
+  void Function(String id, String alias) onChangeAlias;
 
   @override
   State<AttendanceCard> createState() => _AttendanceCardState();
 }
 
 class _AttendanceCardState extends State<AttendanceCard> {
+  late TextEditingController _aliasController;
+  final _formKey = GlobalKey<FormState>();
+  final UserService _userService = UserService();
+  RxBool isLoading = false.obs;
+
+  @override
+  void initState() {
+    super.initState();
+    _aliasController = TextEditingController(text: widget.alias ?? '');
+  }
+
+  @override
+  void dispose() {
+    _aliasController.dispose();
+    super.dispose();
+  }
+
+  Future<void> handleAddAlias() async {
+    try {
+      isLoading.value = true;
+      UserDetailsModel response = await _userService.updateProfile({
+        'user_profile_id': widget.profileId,
+        'profile.alias': _aliasController.text,
+      });
+      widget.onChangeAlias(widget.profileId, _aliasController.text);
+      Get.back();
+    } on Exception catch (e) {
+      showErrorMessage(e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   Future<dynamic> addAlias() {
     return Get.defaultDialog(
       title: 'Add Alias',
@@ -39,18 +80,27 @@ class _AttendanceCardState extends State<AttendanceCard> {
           ),
         ),
       ),
-      confirm: ElevatedButton(
-        onPressed: () {
-          Get.back();
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-        ),
-        child: Text(
-          'Add',
-          style: const TextStyle().copyWith(
-            color: AppColors.white,
+      confirm: Obx(
+        () => ElevatedButton(
+          onPressed: () async {
+            if (_formKey.currentState!.validate()) {
+              _formKey.currentState!.save();
+              await handleAddAlias();
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.primary,
           ),
+          child: isLoading.value
+              ? const CircularProgressIndicator(
+                  color: Colors.white,
+                )
+              : Text(
+                  'Add',
+                  style: const TextStyle().copyWith(
+                    color: AppColors.white,
+                  ),
+                ),
         ),
       ),
       contentPadding: const EdgeInsets.only(
@@ -75,21 +125,32 @@ class _AttendanceCardState extends State<AttendanceCard> {
             const SizedBox(
               height: 8,
             ),
-            TextFormField(
-              initialValue: widget.alias,
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: 0,
-                  horizontal: 10,
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.primary),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.primarySplash),
-                ),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.primary),
+            Form(
+              key: _formKey,
+              child: TextFormField(
+                controller: _aliasController,
+                validator: (value) {
+                  if (value == null || value.trim() == '') {
+                    return 'Enter valid alias';
+                  } else if (value == widget.alias) {
+                    return 'Enter a different alias to update';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: 10,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.primary),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.primarySplash),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.primary),
+                  ),
                 ),
               ),
             ),

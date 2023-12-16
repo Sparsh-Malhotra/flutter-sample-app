@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:pathshala/core/models/update_profile.dart';
 import 'package:pathshala/pages/home/models/session_model.dart';
 import 'package:pathshala/pages/home/models/user_details_model.dart';
 import 'package:pathshala/services/dio_client.dart';
@@ -55,13 +54,13 @@ class UserService {
     }
   }
 
-  Future<UpdateProfileResponse> updateProfile(Map<String, dynamic> data) async {
+  Future<UserDetailsModel> updateProfile(Map<String, dynamic> data) async {
     try {
       FormData formData = FormData.fromMap(data);
-      final response = await _dio.get('/profile/', data: formData);
+      final response = await _dio.patch('/profile/', data: formData);
 
       if (response.statusCode == 200) {
-        return UpdateProfileResponse.fromJson(response.data);
+        return UserDetailsModel.fromJson(response.data);
       } else {
         throw DioException(
           response: response,

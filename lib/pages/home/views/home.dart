@@ -187,89 +187,104 @@ class _HomeScreenState extends State<HomeScreen> {
                             'Mark Attendance',
                             style: AppTextStyle.boldBlack18,
                           ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: dashboardC.sessions.value.length,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              final sessionName = dashboardC
-                                  .sessions
-                                  .value[index]
-                                  .bhaagClassSection
-                                  .bhaagClass
-                                  .bhaagCategory
-                                  .bhaag
-                                  .name;
-                              return ActionCard(
-                                width: width,
-                                height: 70,
-                                radius: 15,
-                                margin: const EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        sessionName,
-                                        style: AppTextStyle.mediumBlack18,
-                                      ),
+                          dashboardC.sessions.value.isEmpty
+                              ? SizedBox(
+                                  height: height * 0.4,
+                                  child: const Center(
+                                    child: Text(
+                                      'No sessions for the selected date!',
                                     ),
-                                    dashboardC.selectedDate.value.day != today
-                                        ? IconButton(
-                                            onPressed: () => {
-                                              Get.toNamed(
-                                                'attendance',
-                                                parameters: {
-                                                  'canEdit': 'false',
-                                                  'bhaag_class_section_id':
-                                                      dashboardC
-                                                          .sessions
-                                                          .value[index]
-                                                          .bhaagClassSection
-                                                          .id
-                                                          .toString(),
-                                                  'session_id': dashboardC
-                                                      .sessions.value[index].id
-                                                      .toString(),
-                                                },
-                                              )
-                                            },
-                                            icon: const Icon(
-                                              Icons.remove_red_eye,
-                                              color: AppColors.primary,
+                                  ),
+                                )
+                              : ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: dashboardC.sessions.value.length,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    final sessionName = dashboardC
+                                        .sessions
+                                        .value[index]
+                                        .bhaagClassSection
+                                        .bhaagClass
+                                        .bhaagCategory
+                                        .bhaag
+                                        .name;
+                                    return ActionCard(
+                                      width: width,
+                                      height: 70,
+                                      radius: 15,
+                                      margin: const EdgeInsets.only(bottom: 10),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              sessionName,
+                                              style: AppTextStyle.mediumBlack18,
                                             ),
-                                          )
-                                        : Container(),
-                                    dashboardC.selectedDate.value.day == today
-                                        ? IconButton(
-                                            onPressed: () => {
-                                              Get.toNamed(
-                                                '/attendance',
-                                                parameters: {
-                                                  'canEdit': 'true',
-                                                  'bhaag_class_section_id':
-                                                      dashboardC
-                                                          .sessions
-                                                          .value[index]
-                                                          .bhaagClassSection
-                                                          .id
-                                                          .toString(),
-                                                  'session_id': dashboardC
-                                                      .sessions.value[index].id
-                                                      .toString(),
-                                                },
-                                              ),
-                                            },
-                                            icon: const Icon(
-                                              Icons.edit,
-                                              color: AppColors.primary,
-                                            ),
-                                          )
-                                        : Container(),
-                                  ],
+                                          ),
+                                          dashboardC.selectedDate.value.day !=
+                                                  today
+                                              ? IconButton(
+                                                  onPressed: () => {
+                                                    Get.toNamed(
+                                                      'attendance',
+                                                      parameters: {
+                                                        'canEdit': 'false',
+                                                        'bhaag_class_section_id':
+                                                            dashboardC
+                                                                .sessions
+                                                                .value[index]
+                                                                .bhaagClassSection
+                                                                .id
+                                                                .toString(),
+                                                        'session_id': dashboardC
+                                                            .sessions
+                                                            .value[index]
+                                                            .id
+                                                            .toString(),
+                                                      },
+                                                    )
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.remove_red_eye,
+                                                    color: AppColors.primary,
+                                                  ),
+                                                )
+                                              : Container(),
+                                          dashboardC.selectedDate.value.day ==
+                                                  today
+                                              ? IconButton(
+                                                  onPressed: () => {
+                                                    Get.toNamed(
+                                                      '/attendance',
+                                                      parameters: {
+                                                        'canEdit': 'true',
+                                                        'bhaag_class_section_id':
+                                                            dashboardC
+                                                                .sessions
+                                                                .value[index]
+                                                                .bhaagClassSection
+                                                                .id
+                                                                .toString(),
+                                                        'session_id': dashboardC
+                                                            .sessions
+                                                            .value[index]
+                                                            .id
+                                                            .toString(),
+                                                      },
+                                                    ),
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.edit,
+                                                    color: AppColors.primary,
+                                                  ),
+                                                )
+                                              : Container(),
+                                        ],
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                          ),
                         ],
                       ),
                     ),
@@ -316,13 +331,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-                          trailing: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.logout,
-                              color: Colors.white,
-                            ),
-                          ),
+                          trailing: dashboardC.isLogoutLoading.value
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : IconButton(
+                                  onPressed: () {
+                                    dashboardC.logoutHandler();
+                                  },
+                                  icon: const Icon(
+                                    Icons.logout,
+                                    color: Colors.white,
+                                  ),
+                                ),
                         ),
                       ),
                     ),

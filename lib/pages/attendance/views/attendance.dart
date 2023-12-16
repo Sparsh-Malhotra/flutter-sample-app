@@ -55,6 +55,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                 '${element.profile['first_name']} ${element.profile['middle_name'] != null ? '${element.profile['middle_name'] + ' '}' : ''}${element.profile['last_name'] ?? ''}',
             alias: element.profile['alias'],
             isPresent: _presentAttendeesResponse.data.contains(element.id),
+            profileId: element.profile['id'].toString(),
           );
         }).toList();
 
@@ -96,6 +97,17 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   void handleChangeAttendance(bool value, int index) {
     List<Attendee> temp = List.from(students.value);
     temp[index].isPresent = value;
+    students.value = temp;
+  }
+
+  void handleChangeAlias(String profileId, String alias) {
+    final temp = students.value;
+    temp.forEach((element) {
+      if (element.profileId == profileId) {
+        element.alias = alias;
+      }
+    });
+
     students.value = temp;
   }
 
@@ -233,9 +245,11 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                               name: students.value[index].name,
                               alias: students.value[index].alias,
                               isPresent: students.value[index].isPresent,
+                              profileId: students.value[index].profileId,
                               onChangeAttendance: (value) {
                                 handleChangeAttendance(value, index);
                               },
+                              onChangeAlias: handleChangeAlias,
                             ),
                           ),
                           widget.canEdit
@@ -255,7 +269,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                       child: SizedBox(
                                         height: 55,
                                         child: LoadingButton(
-                                          text: 'Upload',
+                                          text: 'Submit',
                                           onPress: handleMarkAttendance,
                                         ),
                                       ),
