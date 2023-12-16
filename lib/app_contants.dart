@@ -1,11 +1,12 @@
 enum Roles {
   guest('guest', 0, 'Guest'),
-  admin('admin', 1, 'Admin'),
-  student('student', 2, 'Student'),
-  mentor('mentor', 3, 'Mentor'),
-  coMentor('coMentor', 4, 'Co-Mentor'),
-  volunteer('volunteer', 5, 'Volunteer'),
-  parent('parent', 6, 'Parent');
+  student('student', 1, 'Student'),
+  mentor('mentor', 2, 'Mentor'),
+  admin('admin', 3, 'Admin'),
+  volunteer('volunteer', 4, 'Volunteer'),
+  member('member', 5, 'Member'),
+  parent('parent', 6, 'Parent'),
+  swadhyay('swadhyay', 7, 'Swadhyay');
 
   final String value;
   final int id;
@@ -18,17 +19,19 @@ enum Roles {
   factory Roles.fromId(int? id) {
     switch (id) {
       case 1:
-        return Roles.admin;
-      case 2:
         return Roles.student;
-      case 3:
+      case 2:
         return Roles.mentor;
+      case 3:
+        return Roles.admin;
       case 4:
-        return Roles.coMentor;
-      case 5:
         return Roles.volunteer;
+      case 5:
+        return Roles.member;
       case 6:
         return Roles.parent;
+      case 7:
+        return Roles.swadhyay;
       default:
         return Roles.guest;
     }
