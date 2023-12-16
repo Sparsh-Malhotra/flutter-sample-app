@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:pathshala/core/models/update_profile.dart';
 import 'package:pathshala/pages/home/models/session_model.dart';
 import 'package:pathshala/pages/home/models/user_details_model.dart';
 import 'package:pathshala/services/dio_client.dart';
@@ -40,6 +41,27 @@ class UserService {
         });
 
         return sessionArray;
+      } else {
+        throw DioException(
+          response: response,
+          requestOptions: RequestOptions(path: '/session/'),
+        );
+      }
+    } catch (e) {
+      throw DioException(
+        error: e.toString(),
+        requestOptions: RequestOptions(path: '/session/'),
+      );
+    }
+  }
+
+  Future<UpdateProfileResponse> updateProfile(Map<String, dynamic> data) async {
+    try {
+      FormData formData = FormData.fromMap(data);
+      final response = await _dio.get('/profile/', data: formData);
+
+      if (response.statusCode == 200) {
+        return UpdateProfileResponse.fromJson(response.data);
       } else {
         throw DioException(
           response: response,

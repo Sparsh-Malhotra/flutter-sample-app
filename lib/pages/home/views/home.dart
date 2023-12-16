@@ -120,7 +120,6 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Obx(
         () {
           final userDetails = GetStorage().read('user_details');
-          print(userDetails);
           return isLoading.value || userDetails == null
               ? const Center(
                   child: CircularProgressIndicator(
@@ -290,7 +289,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   AppColors.secondary.withOpacity(0.5),
                               backgroundImage: NetworkImage(
                                 userDetails['profile']['profile_picture'] == ''
-                                    ? genderPlaceholderImages['Male']
+                                    ? genderPlaceholderImages[
+                                        userDetails['profile']['gender']]
                                     : userDetails['profile']['profile_picture'],
                               ),
                               radius: 24,

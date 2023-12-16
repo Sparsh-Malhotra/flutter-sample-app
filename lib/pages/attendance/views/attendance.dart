@@ -1,8 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:pathshala/pages/attendance/models/attendee.dart';
+import 'package:pathshala/pages/attendance/models/student.dart';
 import 'package:pathshala/pages/attendance/views/attendace_card.dart';
+import 'package:pathshala/pages/home/controllers/home_controller.dart';
 import 'package:pathshala/services/api/attendance_service.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/app_text_styles.dart';
@@ -26,6 +29,7 @@ class AttendanceScreen extends StatefulWidget {
 class _AttendanceScreenState extends State<AttendanceScreen> {
   final RxBool isLoading = false.obs;
   final AttendanceService _attendanceService = AttendanceService();
+  final HomeController _homeController = Get.find();
   late final Rx<List<Attendee>> students;
 
   @override
@@ -42,13 +46,15 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
           .getStudents(widget.bhaag_class_section_id ?? '');
 
       if (response.status == 'success') {
+        PresentAttendeesResponse _presentAttendeesResponse =
+            await fetchPresentAttendees();
         List<Attendee> temp = response.data.map((element) {
           return Attendee(
             id: element.id.toString(),
             name:
                 '${element.profile['first_name']} ${element.profile['middle_name'] != null ? '${element.profile['middle_name'] + ' '}' : ''}${element.profile['last_name'] ?? ''}',
             alias: element.profile['alias'],
-            isPresent: false,
+            isPresent: _presentAttendeesResponse.data.contains(element.id),
           );
         }).toList();
 
@@ -61,6 +67,23 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
       print(e);
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<dynamic> fetchPresentAttendees() async {
+    try {
+      final response = await _attendanceService.getPresentAttendees(
+          DateFormat('yyyy-MM-dd').format(_homeController.selectedDate.value),
+          widget.bhaag_class_section_id ?? '');
+
+      if (response.status == 'success') {
+        return response;
+      }
+    } on DioException catch (e) {
+      print(e);
+      handleDioError(e);
+    } catch (e) {
+      print(e);
     }
   }
 

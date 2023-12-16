@@ -30,4 +30,5 @@ const genderPlaceholderImages = {
       'https://ik.imagekit.io/1sqz4p2iv/woman.png?updatedAt=1702667862124',
   'Others':
       'https://ik.imagekit.io/1sqz4p2iv/Others.png?updatedAt=1702667862164',
+  '': 'https://ik.imagekit.io/1sqz4p2iv/user.png?updatedAt=1702712126752',
 };

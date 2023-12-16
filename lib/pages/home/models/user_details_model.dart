@@ -40,7 +40,8 @@ class UserProfile {
   final String alias;
   final String email;
   final String bloodGroup;
-  final dynamic profilePicture; // Adjust the type based on your API response
+  final dynamic profilePicture;
+  final String gender;
   final List<int> groups;
 
   UserProfile({
@@ -54,6 +55,7 @@ class UserProfile {
     required this.email,
     required this.bloodGroup,
     required this.profilePicture,
+    required this.gender,
     required this.groups,
   });
 
@@ -68,6 +70,7 @@ class UserProfile {
       alias: json['alias'] ?? '',
       email: json['email'] ?? '',
       bloodGroup: json['blood_group'] ?? '',
+      gender: json['gender'] ?? '',
       profilePicture: json['profile_picture'] ?? '',
       groups: (List<int>.from(json['groups'] ?? [])),
     );
@@ -84,6 +87,7 @@ class UserProfile {
       'alias': alias,
       'email': email,
       'blood_group': bloodGroup,
+      'gender': gender,
       'profile_picture': profilePicture,
       'groups': groups,
     };
