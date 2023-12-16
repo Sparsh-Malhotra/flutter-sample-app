@@ -50,7 +50,7 @@ class DatePicker extends GetxController {
       currentDate: DateTime.now(),
       initialDate: selectedDate,
       firstDate: DateTime(2000),
-      lastDate: DateTime.now(),
+      lastDate: DateTime(2035),
       initialEntryMode: DatePickerEntryMode.calendar,
       initialDatePickerMode: DatePickerMode.day,
       // selectableDayPredicate: _decideWhichDayToEnable,
