@@ -14,6 +14,7 @@ import 'package:pathshala/widgets/pickers/date_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pathshala/widgets/widget_with_role.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -35,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   HomeController dashboardC = Get.put(HomeController());
   final UserService _userService = UserService();
+  RxString sessionMode = 'offline'.obs;
 
   Future<void> fetchData() async {
     try {
@@ -124,6 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Obx(
         () {
           final userDetails = GetStorage().read('user_details');
+          final modifiedSessions = dashboardC.sessions.value
+              .where((session) => session.mode == sessionMode.value)
+              .toList();
           return isLoading.value || userDetails == null
               ? const Center(
                   child: CircularProgressIndicator(
@@ -197,11 +202,42 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  'Mark Attendance',
-                                  style: AppTextStyle.boldBlack18,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Mark Attendance',
+                                      style: AppTextStyle.boldBlack18,
+                                    ),
+                                    ToggleSwitch(
+                                      minWidth: 67.0,
+                                      initialLabelIndex:
+                                          sessionMode.value == 'offline'
+                                              ? 0
+                                              : 1,
+                                      cornerRadius: 20.0,
+                                      activeFgColor: Colors.white,
+                                      inactiveBgColor: AppColors.primarySplash,
+                                      inactiveFgColor: Colors.white,
+                                      totalSwitches: 2,
+                                      labels: const ['Offline', 'Online'],
+                                      activeBgColors: const [
+                                        [AppColors.primary],
+                                        [AppColors.primary]
+                                      ],
+                                      onToggle: (index) {
+                                        if (index == 0) {
+                                          sessionMode.value = 'offline';
+                                        } else {
+                                          sessionMode.value = 'online';
+                                        }
+                                      },
+                                    ),
+                                  ],
                                 ),
-                                dashboardC.sessions.value.isEmpty
+                                dashboardC.sessions.value.isEmpty ||
+                                        modifiedSessions.isEmpty
                                     ? SizedBox(
                                         height: height * 0.4,
                                         child: const Center(
@@ -212,19 +248,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                       )
                                     : ListView.builder(
                                         shrinkWrap: true,
-                                        itemCount:
-                                            dashboardC.sessions.value.length,
+                                        itemCount: modifiedSessions.length,
                                         physics:
                                             const NeverScrollableScrollPhysics(),
                                         itemBuilder: (context, index) {
-                                          final sessionName = dashboardC
-                                              .sessions
-                                              .value[index]
-                                              .bhaagClassSection
-                                              .bhaagClass
-                                              .bhaagCategory
-                                              .bhaag
-                                              .name;
+                                          final sessionName =
+                                              modifiedSessions[index]
+                                                  .bhaagClassSection
+                                                  .bhaagClass
+                                                  .bhaagCategory
+                                                  .bhaag
+                                                  .name;
+                                          final section =
+                                              modifiedSessions[index]
+                                                  .bhaagClassSection
+                                                  .section;
                                           return ActionCard(
                                             width: width,
                                             height: 70,
@@ -236,7 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               children: [
                                                 Expanded(
                                                   child: Text(
-                                                    sessionName,
+                                                    '$sessionName ($section)',
                                                     style: AppTextStyle
                                                         .mediumBlack18,
                                                   ),

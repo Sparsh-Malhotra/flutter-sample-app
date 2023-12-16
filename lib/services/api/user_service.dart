@@ -32,11 +32,18 @@ class UserService {
           await _dio.get('/session/', queryParameters: {'date': date});
 
       if (response.statusCode == 200) {
-        final data = response.data['data'] as List<dynamic>;
+        final onlineData = response.data['data']['online'] as List<dynamic>;
+        final offlineData = response.data['data']['offline'] as List<dynamic>;
         final List<SessionModel> sessionArray = [];
 
-        data.forEach((element) {
-          sessionArray.add(SessionModel.fromJson(element));
+        onlineData.forEach((element) {
+          sessionArray
+              .add(SessionModel.fromJson({...element, 'mode': 'online'}));
+        });
+
+        offlineData.forEach((element) {
+          sessionArray
+              .add(SessionModel.fromJson({...element, 'mode': 'offline'}));
         });
 
         return sessionArray;

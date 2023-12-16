@@ -2,9 +2,13 @@ class SessionModel {
   int id;
   BhaagClassSectionModel bhaagClassSection;
   String date;
+  String mode;
 
   SessionModel(
-      {required this.id, required this.bhaagClassSection, required this.date});
+      {required this.id,
+      required this.bhaagClassSection,
+      required this.date,
+      required this.mode});
 
   factory SessionModel.fromJson(Map<String, dynamic> json) {
     return SessionModel(
@@ -12,6 +16,7 @@ class SessionModel {
       bhaagClassSection:
           BhaagClassSectionModel.fromJson(json['bhaag_class_section']),
       date: json['date'],
+      mode: json['mode'],
     );
   }
 }

@@ -41,6 +41,7 @@ dependencies:
   dio: ^5.4.0
   get_storage: ^2.1.1
   easy_loading_button: ^0.3.2
+  toggle_switch: ^2.1.0
 
 dev_dependencies:
   flutter_test:
