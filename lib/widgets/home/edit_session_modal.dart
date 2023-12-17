@@ -46,9 +46,9 @@ class _EditSessionModalState extends State<EditSessionModal> {
     return Container(
       width: width,
       height: height * 0.65,
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.all(20.0),
+      child: ListView(
+        shrinkWrap: true,
         children: [
           Align(
             child: Text(
@@ -191,7 +191,9 @@ class _EditSessionModalState extends State<EditSessionModal> {
               style: AppTextStyle.regularBlack16,
             ),
           ),
-          const Spacer(),
+          const SizedBox(
+            height: 20,
+          ),
           SizedBox(
             height: 50,
             child: LoadingButton(
