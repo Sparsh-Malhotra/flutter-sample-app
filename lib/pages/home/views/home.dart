@@ -10,6 +10,7 @@ import 'package:pathshala/utils/curves/medium_curve.dart';
 import 'package:pathshala/utils/functions.dart';
 import 'package:pathshala/widgets/cards/topbar.dart';
 import 'package:pathshala/widgets/cards/action_card.dart';
+import 'package:pathshala/widgets/home/edit_session_modal.dart';
 import 'package:pathshala/widgets/pickers/date_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -270,6 +271,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                             margin: const EdgeInsets.only(
                                               bottom: 10,
                                             ),
+                                            onTap: () {
+                                              showModalBottomSheet(
+                                                backgroundColor:
+                                                    AppColors.white,
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return EditSessionModal(
+                                                    bhaagName: sessionName,
+                                                    section: section,
+                                                    onSubmit:
+                                                        (DateTime selectedDate,
+                                                            String textValue) {
+                                                      // Handle the submitted data here
+                                                      print(
+                                                          'Selected Date: $selectedDate');
+                                                      print(
+                                                          'Text Value: $textValue');
+                                                    },
+                                                  );
+                                                },
+                                              );
+                                            },
                                             child: Row(
                                               children: [
                                                 Expanded(
