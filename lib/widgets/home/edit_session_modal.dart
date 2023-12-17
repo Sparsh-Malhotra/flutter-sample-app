@@ -29,6 +29,7 @@ class _EditSessionModalState extends State<EditSessionModal> {
   final HomeController _homeController = Get.find();
 
   late final Rx<DateTime> _selectedDate;
+  final Rx<TimeOfDay> _selectedTime = Rx<TimeOfDay>(TimeOfDay.now());
   final RxString _mentor = ''.obs;
 
   @override
@@ -40,9 +41,11 @@ class _EditSessionModalState extends State<EditSessionModal> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
     return Container(
       width: width,
+      height: height * 0.65,
       padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,6 +114,47 @@ class _EditSessionModalState extends State<EditSessionModal> {
                 );
                 if (selectedDate != null) {
                   _selectedDate.value = selectedDate;
+                }
+              },
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Text(
+            'Time',
+            style: AppTextStyle.mediumBlack14,
+          ),
+          const SizedBox(
+            height: 3,
+          ),
+          Obx(
+            () => TextField(
+              controller: TextEditingController(
+                text: _selectedTime.value.format(context),
+              ),
+              readOnly: true,
+              decoration: const InputDecoration(
+                suffixIcon: Icon(Icons.access_time),
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.grey)),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.grey),
+                ),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.grey),
+                ),
+              ),
+              onTap: () async {
+                final selectedTime = await DatePicker().buildTimePicker(
+                  context,
+                  _selectedTime.value,
+                  'Select Session time',
+                );
+                if (selectedTime != null) {
+                  _selectedTime.value = selectedTime;
                 }
               },
             ),

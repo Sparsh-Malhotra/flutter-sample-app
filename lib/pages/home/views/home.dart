@@ -273,6 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                             onTap: () {
                                               showModalBottomSheet(
+                                                isScrollControlled: true,
                                                 backgroundColor:
                                                     AppColors.white,
                                                 context: context,
