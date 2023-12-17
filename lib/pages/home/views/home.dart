@@ -290,17 +290,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               'canEdit':
                                                                   'false',
                                                               'bhaag_class_section_id':
-                                                                  dashboardC
-                                                                      .sessions
-                                                                      .value[
+                                                                  modifiedSessions[
                                                                           index]
                                                                       .bhaagClassSection
                                                                       .id
                                                                       .toString(),
                                                               'session_id':
-                                                                  dashboardC
-                                                                      .sessions
-                                                                      .value[
+                                                                  modifiedSessions[
                                                                           index]
                                                                       .id
                                                                       .toString(),
@@ -324,17 +320,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             parameters: {
                                                               'canEdit': 'true',
                                                               'bhaag_class_section_id':
-                                                                  dashboardC
-                                                                      .sessions
-                                                                      .value[
+                                                                  modifiedSessions[
                                                                           index]
                                                                       .bhaagClassSection
                                                                       .id
                                                                       .toString(),
                                                               'session_id':
-                                                                  dashboardC
-                                                                      .sessions
-                                                                      .value[
+                                                                  modifiedSessions[
                                                                           index]
                                                                       .id
                                                                       .toString(),
