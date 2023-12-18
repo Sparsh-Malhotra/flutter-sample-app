@@ -118,7 +118,6 @@ class DatePicker extends GetxController {
               selectedTime.hour,
               selectedTime.minute,
             ),
-            minuteInterval: 5,
           ),
         );
       },

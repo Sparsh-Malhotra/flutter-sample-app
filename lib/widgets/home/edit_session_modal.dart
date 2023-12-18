@@ -3,21 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pathshala/pages/home/controllers/home_controller.dart';
+import 'package:pathshala/pages/home/models/session_model.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/app_text_styles.dart';
+import 'package:pathshala/utils/functions.dart';
 import 'package:pathshala/widgets/loading_button.dart';
 import 'package:pathshala/widgets/pickers/date_picker.dart';
 
 class EditSessionModal extends StatefulWidget {
-  const EditSessionModal(
-      {super.key,
-      required this.bhaagName,
-      required this.section,
-      required this.onSubmit});
+  const EditSessionModal({
+    super.key,
+    required this.bhaagName,
+    required this.time,
+    required this.section,
+    required this.mentorList,
+    required this.currentMentor,
+    required this.onSubmit,
+  });
 
   final String bhaagName;
   final String section;
-  final Function(DateTime selectedDate, String mentor) onSubmit;
+  final String time;
+  final Map<String, dynamic> currentMentor;
+  final List<TeamModel> mentorList;
+  final Function(
+    DateTime selectedDate,
+    TimeOfDay selectedTime,
+    String mentor,
+  ) onSubmit;
 
   @override
   State<EditSessionModal> createState() {
@@ -29,12 +42,31 @@ class _EditSessionModalState extends State<EditSessionModal> {
   final HomeController _homeController = Get.find();
 
   late final Rx<DateTime> _selectedDate;
-  final Rx<TimeOfDay> _selectedTime = Rx<TimeOfDay>(TimeOfDay.now());
-  final RxString _mentor = ''.obs;
+  late final Rx<TimeOfDay> _selectedTime;
+  late final RxString _mentor;
+
+  late final List<MentorModel> mentorList;
 
   @override
   void initState() {
     _selectedDate = Rx<DateTime>(_homeController.selectedDate.value);
+    _selectedTime = Rx<TimeOfDay>(convertStringToTimeOfDay(widget.time));
+    mentorList = widget.mentorList.isEmpty
+        ? [
+            MentorModel(
+              id: widget.currentMentor['id'],
+              name: widget.currentMentor['name'],
+            )
+          ]
+        : widget.mentorList
+            .map(
+              (mentor) => MentorModel(
+                name: '${mentor.profile.firstName} ${mentor.profile.lastName}',
+                id: mentor.id,
+              ),
+            )
+            .toList();
+    _mentor = RxString(widget.currentMentor['id'].toString());
     super.initState();
   }
 
@@ -168,9 +200,14 @@ class _EditSessionModalState extends State<EditSessionModal> {
           ),
           CustomDropdown<String>(
             hintText: '',
-            items: const ['Sparsh', 'Harshit'],
+            initialItem: widget.currentMentor['name'],
+            items: mentorList.map((mentor) => mentor.name).toList(),
             onChanged: (value) {
-              _mentor.value = value;
+              _mentor.value = mentorList
+                  .where((mentor) => mentor.name == value)
+                  .toList()[0]
+                  .id
+                  .toString();
             },
             closedBorder: Border.all(
               color: AppColors.primarySplash,
@@ -199,7 +236,11 @@ class _EditSessionModalState extends State<EditSessionModal> {
             child: LoadingButton(
                 text: 'Submit',
                 onPress: () async {
-                  await widget.onSubmit(_selectedDate.value, _mentor.value);
+                  await widget.onSubmit(
+                    _selectedDate.value,
+                    _selectedTime.value,
+                    _mentor.value,
+                  );
                   Get.back();
                 }),
           ),
