@@ -440,7 +440,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 userDetails['profile']['profile_picture'] == ''
                                     ? genderPlaceholderImages[
                                         userDetails['profile']['gender']]
-                                    : userDetails['profile']['profile_picture'],
+                                    : formatAssetsUrl(userDetails['profile']
+                                        ['profile_picture']) as dynamic,
                               ),
                               radius: 24,
                             ),

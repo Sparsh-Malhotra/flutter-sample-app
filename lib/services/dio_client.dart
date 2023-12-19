@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pathshala/app_contants.dart';
 
 class DioClient {
   static final Dio _dio = Dio(
-    BaseOptions(baseUrl: 'http://184.72.203.57:9000/pathshala'),
+    BaseOptions(baseUrl: baseUrl),
   );
 
   static Dio get instance => _dio;

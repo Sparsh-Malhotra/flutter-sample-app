@@ -1,3 +1,4 @@
+import 'package:pathshala/app_contants.dart';
 import 'package:pathshala/utils/app_text_styles.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/widgets/cards/topbar.dart';
@@ -69,4 +70,8 @@ TimeOfDay convertStringToTimeOfDay(String timeString) {
 String formatTimeOfDay(TimeOfDay timeOfDay) {
   String twoDigits(int n) => n.toString().padLeft(2, '0');
   return '${twoDigits(timeOfDay.hour)}:${twoDigits(timeOfDay.minute)}';
+}
+
+String formatAssetsUrl(String url) {
+  return '${baseUrl}${url}';
 }

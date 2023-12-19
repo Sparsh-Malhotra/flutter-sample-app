@@ -236,6 +236,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                             return null;
                           },
+                          isUsername: true,
                         ),
                         inputFile(
                           label: 'Password',

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/app_text_styles.dart';
+import 'package:pathshala/utils/formatters.dart';
 
 Widget inputFile({
   label,
@@ -15,7 +17,16 @@ Widget inputFile({
   void Function(String)? onChange,
   void Function(String?)? onSave,
   String? Function(String?)? validator,
+  bool? isUsername,
 }) {
+  final List<TextInputFormatter> inputFormatters = [];
+  if (isUsername != null && isUsername) {
+    inputFormatters.add(FilteringTextInputFormatter.allow(
+      RegExp(r"[a-zA-Z0-9]"),
+    ));
+    inputFormatters.add(UpperCaseTextFormatter());
+  }
+
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -63,6 +74,10 @@ Widget inputFile({
           ),
         ),
         validator: validator,
+        inputFormatters: inputFormatters,
+        textCapitalization: isUsername != null && isUsername
+            ? TextCapitalization.characters
+            : TextCapitalization.none,
       ),
       const SizedBox(
         height: 10,

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pathshala/pages/home/models/user_details_model.dart';
 import 'package:pathshala/pages/login/controllers/login_controller.dart';
 import 'package:pathshala/utils/app_colors.dart';
+import 'package:pathshala/utils/formatters.dart';
 import 'package:pathshala/widgets/large_outlined_button.dart';
 import 'package:pathshala/widgets/loading_button.dart';
 
@@ -56,6 +58,13 @@ class _MobileInputState extends State<MobileInput> {
                     children: [
                       TextField(
                         controller: loginController.usernameController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                            RegExp(r"[a-zA-Z0-9]"),
+                          ),
+                          UpperCaseTextFormatter()
+                        ],
+                        textCapitalization: TextCapitalization.characters,
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
                           border: InputBorder.none,

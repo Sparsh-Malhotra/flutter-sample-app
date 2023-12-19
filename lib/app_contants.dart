@@ -1,3 +1,5 @@
+const baseUrl = 'http://184.72.203.57:9000/pathshala';
+
 enum Roles {
   guest('guest', 0, 'Guest'),
   student('student', 1, 'Student'),
