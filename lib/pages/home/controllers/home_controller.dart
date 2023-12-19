@@ -22,9 +22,7 @@ class HomeController extends GetxController {
             await _authService.logout(refreshToken);
 
         if (logoutResponse.status == 'success') {
-          GetStorage().remove('access_token');
-          GetStorage().remove('refresh_token');
-          GetStorage().remove('user_details');
+          GetStorage().erase();
           Get.offNamed('/login');
         } else {
           final errorMessage = logoutResponse.error.message;
