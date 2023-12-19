@@ -19,6 +19,7 @@ class EditSessionModal extends StatefulWidget {
     required this.mentorList,
     required this.currentMentor,
     required this.onSubmit,
+    required this.postSubmit,
   });
 
   final String bhaagName;
@@ -31,6 +32,7 @@ class EditSessionModal extends StatefulWidget {
     TimeOfDay selectedTime,
     String mentor,
   ) onSubmit;
+  final Function() postSubmit;
 
   @override
   State<EditSessionModal> createState() {
@@ -234,15 +236,16 @@ class _EditSessionModalState extends State<EditSessionModal> {
           SizedBox(
             height: 50,
             child: LoadingButton(
-                text: 'Submit',
-                onPress: () async {
-                  await widget.onSubmit(
-                    _selectedDate.value,
-                    _selectedTime.value,
-                    _mentor.value,
-                  );
-                  Get.back();
-                }),
+              text: 'Submit',
+              onPress: () async {
+                await widget.onSubmit(
+                  _selectedDate.value,
+                  _selectedTime.value,
+                  _mentor.value,
+                );
+                await widget.postSubmit();
+              },
+            ),
           ),
         ],
       ),

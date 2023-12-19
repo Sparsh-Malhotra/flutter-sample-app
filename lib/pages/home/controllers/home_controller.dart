@@ -56,10 +56,7 @@ class HomeController extends GetxController {
       });
 
       if (response.status == 'success') {
-        GetStorage().remove('access_token');
-        GetStorage().remove('refresh_token');
-        GetStorage().remove('user_details');
-        Get.offNamed('/login');
+        Get.back();
       } else {
         final errorMessage = response.error.message;
         showErrorMessage(errorMessage);

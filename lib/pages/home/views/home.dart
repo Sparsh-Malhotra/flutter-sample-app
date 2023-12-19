@@ -336,6 +336,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 .toString(),
                                                       );
                                                     },
+                                                    postSubmit: fetchSessions,
                                                   );
                                                 },
                                               );
