@@ -57,3 +57,16 @@ void showErrorMessage(String message) {
     margin: const EdgeInsets.all(15),
   );
 }
+
+TimeOfDay convertStringToTimeOfDay(String timeString) {
+  List<int> parts = timeString.split(':').map(int.parse).toList();
+
+  TimeOfDay timeOfDay = TimeOfDay(hour: parts[0], minute: parts[1]);
+
+  return timeOfDay;
+}
+
+String formatTimeOfDay(TimeOfDay timeOfDay) {
+  String twoDigits(int n) => n.toString().padLeft(2, '0');
+  return '${twoDigits(timeOfDay.hour)}:${twoDigits(timeOfDay.minute)}';
+}

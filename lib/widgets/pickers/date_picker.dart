@@ -74,20 +74,68 @@ class DatePicker extends GetxController {
     );
   }
 
-  Future<TimeOfDay?> buildMaterialTimePicker(BuildContext context) async {
-    return await showTimePicker(
-      initialTime: TimeOfDay.now(),
+  Future<TimeOfDay?> buildTimePicker(
+      BuildContext context, TimeOfDay selectedTime,
+      [String? hintText]) async {
+    TimeOfDay? pickedTime;
+    if (Theme.of(context).platform == TargetPlatform.iOS) {
+      pickedTime = await buildCupertinoTimePicker(context, selectedTime);
+    } else {
+      pickedTime =
+          await buildMaterialTimePicker(context, selectedTime, hintText);
+    }
+    return pickedTime;
+  }
+
+  Future<TimeOfDay?> buildCupertinoTimePicker(
+    BuildContext context,
+    TimeOfDay selectedTime,
+  ) async {
+    TimeOfDay? pickedTime;
+    await showModalBottomSheet(
       context: context,
-      helpText: 'Select booking time',
-      cancelText: 'Not now',
-      confirmText: 'Confirm',
-      // errorInvalidText: 'Enter time in valid range',
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.dark(),
-          child: child!,
+      builder: (BuildContext builder) {
+        return Container(
+          height: MediaQuery.of(context).copyWith().size.height / 3,
+          color: Colors.white,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.time,
+            onDateTimeChanged: (picked) {
+              pickedTime = TimeOfDay.fromDateTime(
+                DateTime(
+                  DateTime.now().year,
+                  DateTime.now().month,
+                  DateTime.now().day,
+                  picked.hour,
+                  picked.minute,
+                ),
+              );
+            },
+            initialDateTime: DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+              DateTime.now().day,
+              selectedTime.hour,
+              selectedTime.minute,
+            ),
+          ),
         );
       },
+    );
+    return pickedTime;
+  }
+
+  Future<TimeOfDay?> buildMaterialTimePicker(
+    BuildContext context,
+    TimeOfDay selectedTime,
+    String? hintText,
+  ) async {
+    return await showTimePicker(
+      context: context,
+      initialTime: selectedTime,
+      helpText: hintText,
+      cancelText: 'Cancel',
+      confirmText: 'Confirm',
     );
   }
 }

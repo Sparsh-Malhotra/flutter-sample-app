@@ -37,13 +37,17 @@ class UserService {
         final List<SessionModel> sessionArray = [];
 
         onlineData.forEach((element) {
-          sessionArray
-              .add(SessionModel.fromJson({...element, 'mode': 'online'}));
+          sessionArray.add(SessionModel.fromJson({
+            ...element,
+            'mode': 'online',
+          }));
         });
 
         offlineData.forEach((element) {
-          sessionArray
-              .add(SessionModel.fromJson({...element, 'mode': 'offline'}));
+          sessionArray.add(SessionModel.fromJson({
+            ...element,
+            'mode': 'offline',
+          }));
         });
 
         return sessionArray;

@@ -10,6 +10,7 @@ import 'package:pathshala/utils/curves/medium_curve.dart';
 import 'package:pathshala/utils/functions.dart';
 import 'package:pathshala/widgets/cards/topbar.dart';
 import 'package:pathshala/widgets/cards/action_card.dart';
+import 'package:pathshala/widgets/home/edit_session_modal.dart';
 import 'package:pathshala/widgets/pickers/date_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -60,6 +61,23 @@ class _HomeScreenState extends State<HomeScreen> {
         GetStorage().write('user_details', responses[1].toJson());
       }
     } on DioException catch (e) {
+      print(e);
+      handleDioError(e);
+    } catch (e) {
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> fetchSessions() async {
+    try {
+      isLoading.value = true;
+      final response = await _userService.getSessions(
+          DateFormat('yyyy-MM-dd').format(dashboardC.selectedDate.value));
+      dashboardC.sessions.value = response;
+    } on DioException catch (e) {
+      print(e);
       handleDioError(e);
     } catch (e) {
       print(e);
@@ -263,6 +281,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               modifiedSessions[index]
                                                   .bhaagClassSection
                                                   .section;
+                                          final sessionTime =
+                                              modifiedSessions[index].time;
+                                          final mentorList =
+                                              modifiedSessions[index]
+                                                  .bhaagClassSection
+                                                  .team;
                                           return ActionCard(
                                             width: width,
                                             height: 70,
@@ -270,6 +294,53 @@ class _HomeScreenState extends State<HomeScreen> {
                                             margin: const EdgeInsets.only(
                                               bottom: 10,
                                             ),
+                                            onTap: () {
+                                              showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    AppColors.white,
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return EditSessionModal(
+                                                    bhaagName: sessionName,
+                                                    section: section,
+                                                    time: sessionTime,
+                                                    mentorList: mentorList,
+                                                    currentMentor: {
+                                                      'name':
+                                                          '${modifiedSessions[index].dayMentor.profile.firstName} ${modifiedSessions[index].dayMentor.profile.lastName}',
+                                                      'id': modifiedSessions[
+                                                              index]
+                                                          .dayMentor
+                                                          .id,
+                                                    },
+                                                    onSubmit: (
+                                                      DateTime selectedDate,
+                                                      TimeOfDay selectedTime,
+                                                      String mentorId,
+                                                    ) async {
+                                                      await dashboardC
+                                                          .editSessionHandler(
+                                                        mentorId: mentorId,
+                                                        date: DateFormat(
+                                                                'yyyy-MM-dd')
+                                                            .format(
+                                                                selectedDate),
+                                                        time: formatTimeOfDay(
+                                                            selectedTime),
+                                                        sessionId:
+                                                            modifiedSessions[
+                                                                    index]
+                                                                .id
+                                                                .toString(),
+                                                      );
+                                                    },
+                                                    postSubmit: fetchSessions,
+                                                  );
+                                                },
+                                              );
+                                            },
                                             child: Row(
                                               children: [
                                                 Expanded(
