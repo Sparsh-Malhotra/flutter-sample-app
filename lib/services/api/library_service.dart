@@ -1,25 +1,23 @@
 import 'package:dio/dio.dart';
 import 'package:pathshala/core/models/api_error_model.dart';
-import 'package:pathshala/core/models/generic_response.dart';
+import 'package:pathshala/pages/books/models/books_response_model.dart';
 import 'package:pathshala/services/dio_client.dart';
 
-class SessionService {
+class LibraryService {
   final Dio _dio = DioClient.instance;
 
-  Future<GenericApiResponse> editSession(Map<String, dynamic> data) async {
+  Future<BooksResponseModel> getBooks() async {
     try {
       final response = await _dio.put(
-        '/session/',
-        data: data,
+        '/bhaag/',
       );
-
       if (response.statusCode == 200) {
-        return GenericApiResponse.fromJson(response.data);
+        return BooksResponseModel.fromJson(response.data);
       } else {
-        return GenericApiResponse(
+        return BooksResponseModel(
           status: 'error',
           message: '',
-          data: '',
+          data: [],
           error: ApiError.fromJson(response.data['error'] ?? {}),
         );
       }
