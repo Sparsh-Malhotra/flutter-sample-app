@@ -65,6 +65,7 @@ class _AttendanceCardState extends State<AttendanceCard> {
 
   Future<dynamic> addAlias() {
     return Get.defaultDialog(
+      backgroundColor: AppColors.white,
       title: 'Add Alias',
       titleStyle: AppTextStyle.mediumBlack20,
       cancel: OutlinedButton(
