@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:pathshala/app_contants.dart';
@@ -10,6 +11,7 @@ import 'package:pathshala/utils/curves/medium_curve.dart';
 import 'package:pathshala/utils/functions.dart';
 import 'package:pathshala/widgets/cards/topbar.dart';
 import 'package:pathshala/widgets/cards/action_card.dart';
+import 'package:pathshala/widgets/dialogues/alert_dialogue.dart';
 import 'package:pathshala/widgets/home/edit_session_modal.dart';
 import 'package:pathshala/widgets/pickers/date_picker.dart';
 import 'package:flutter/material.dart';
@@ -287,131 +289,191 @@ class _HomeScreenState extends State<HomeScreen> {
                                               modifiedSessions[index]
                                                   .bhaagClassSection
                                                   .team;
-                                          return ActionCard(
-                                            width: width,
+                                          return Container(
                                             height: 70,
-                                            radius: 15,
                                             margin: const EdgeInsets.only(
                                               bottom: 10,
                                             ),
-                                            onTap: () {
-                                              showModalBottomSheet(
-                                                isScrollControlled: true,
-                                                backgroundColor:
-                                                    AppColors.white,
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return EditSessionModal(
-                                                    bhaagName: sessionName,
-                                                    section: section,
-                                                    time: sessionTime,
-                                                    mentorList: mentorList,
-                                                    currentMentor: {
-                                                      'name':
-                                                          '${modifiedSessions[index].dayMentor.profile.firstName} ${modifiedSessions[index].dayMentor.profile.lastName}',
-                                                      'id': modifiedSessions[
-                                                              index]
-                                                          .dayMentor
-                                                          .id,
-                                                    },
-                                                    onSubmit: (
-                                                      DateTime selectedDate,
-                                                      TimeOfDay selectedTime,
-                                                      String mentorId,
-                                                    ) async {
-                                                      await dashboardC
-                                                          .editSessionHandler(
-                                                        mentorId: mentorId,
-                                                        date: DateFormat(
-                                                                'yyyy-MM-dd')
-                                                            .format(
-                                                                selectedDate),
-                                                        time: formatTimeOfDay(
-                                                            selectedTime),
-                                                        sessionId:
-                                                            modifiedSessions[
-                                                                    index]
-                                                                .id
-                                                                .toString(),
+                                            child: Slidable(
+                                              key: ValueKey(
+                                                  modifiedSessions[index]),
+                                              startActionPane: ActionPane(
+                                                motion: const ScrollMotion(),
+                                                children: [
+                                                  SlidableAction(
+                                                    autoClose: false,
+                                                    onPressed: (context) {
+                                                      CustomAlertDialogController()
+                                                          .showCustomAlertDialog(
+                                                        cancelText: 'Cancel',
+                                                        confirmText: 'Confirm',
+                                                        onConfirm: () async {
+                                                          final res =
+                                                              await dashboardC
+                                                                  .cancelSessionHandler(
+                                                            sessionId:
+                                                                modifiedSessions[
+                                                                        index]
+                                                                    .id
+                                                                    .toString(),
+                                                          );
+                                                          if (res ==
+                                                              'Success') {
+                                                            final temp =
+                                                                dashboardC
+                                                                    .sessions
+                                                                    .value;
+                                                            dashboardC.sessions.value = temp
+                                                                .where((session) =>
+                                                                    session
+                                                                        .id !=
+                                                                    modifiedSessions[
+                                                                            index]
+                                                                        .id)
+                                                                .toList();
+                                                          }
+                                                        },
+                                                        headingText: 'Alert',
+                                                        description:
+                                                            'Are you sure you want to cancel this Session?',
                                                       );
                                                     },
-                                                    postSubmit: fetchSessions,
+                                                    backgroundColor:
+                                                        const Color(0xFFFE4A49),
+                                                    foregroundColor:
+                                                        Colors.white,
+                                                    icon: Icons.event_busy,
+                                                    label: 'Cancel Session',
+                                                  ),
+                                                ],
+                                              ),
+                                              child: ActionCard(
+                                                width: width,
+                                                height: 70,
+                                                radius: 15,
+                                                onTap: () {
+                                                  showModalBottomSheet(
+                                                    isScrollControlled: true,
+                                                    backgroundColor:
+                                                        AppColors.white,
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return EditSessionModal(
+                                                        bhaagName: sessionName,
+                                                        section: section,
+                                                        time: sessionTime,
+                                                        mentorList: mentorList,
+                                                        currentMentor: {
+                                                          'name':
+                                                              '${modifiedSessions[index].dayMentor.profile.firstName} ${modifiedSessions[index].dayMentor.profile.lastName}',
+                                                          'id':
+                                                              modifiedSessions[
+                                                                      index]
+                                                                  .dayMentor
+                                                                  .id,
+                                                        },
+                                                        onSubmit: (
+                                                          DateTime selectedDate,
+                                                          TimeOfDay
+                                                              selectedTime,
+                                                          String mentorId,
+                                                        ) async {
+                                                          await dashboardC
+                                                              .editSessionHandler(
+                                                            mentorId: mentorId,
+                                                            date: DateFormat(
+                                                                    'yyyy-MM-dd')
+                                                                .format(
+                                                                    selectedDate),
+                                                            time: formatTimeOfDay(
+                                                                selectedTime),
+                                                            sessionId:
+                                                                modifiedSessions[
+                                                                        index]
+                                                                    .id
+                                                                    .toString(),
+                                                          );
+                                                        },
+                                                        postSubmit:
+                                                            fetchSessions,
+                                                      );
+                                                    },
                                                   );
                                                 },
-                                              );
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    '$sessionName ($section)',
-                                                    style: AppTextStyle
-                                                        .mediumBlack18,
-                                                  ),
-                                                ),
-                                                dashboardC.selectedDate.value
-                                                            .day !=
-                                                        today
-                                                    ? IconButton(
-                                                        onPressed: () => {
-                                                          Get.toNamed(
-                                                            'attendance',
-                                                            parameters: {
-                                                              'canEdit':
-                                                                  'false',
-                                                              'bhaag_class_section_id':
-                                                                  modifiedSessions[
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        '$sessionName ($section)',
+                                                        style: AppTextStyle
+                                                            .mediumBlack18,
+                                                      ),
+                                                    ),
+                                                    dashboardC.selectedDate
+                                                                .value.day !=
+                                                            today
+                                                        ? IconButton(
+                                                            onPressed: () => {
+                                                              Get.toNamed(
+                                                                'attendance',
+                                                                parameters: {
+                                                                  'canEdit':
+                                                                      'false',
+                                                                  'bhaag_class_section_id': modifiedSessions[
                                                                           index]
                                                                       .bhaagClassSection
                                                                       .id
                                                                       .toString(),
-                                                              'session_id':
-                                                                  modifiedSessions[
-                                                                          index]
-                                                                      .id
-                                                                      .toString(),
+                                                                  'session_id':
+                                                                      modifiedSessions[
+                                                                              index]
+                                                                          .id
+                                                                          .toString(),
+                                                                },
+                                                              )
                                                             },
+                                                            icon: const Icon(
+                                                              Icons
+                                                                  .remove_red_eye,
+                                                              color: AppColors
+                                                                  .primary,
+                                                            ),
                                                           )
-                                                        },
-                                                        icon: const Icon(
-                                                          Icons.remove_red_eye,
-                                                          color:
-                                                              AppColors.primary,
-                                                        ),
-                                                      )
-                                                    : Container(),
-                                                dashboardC.selectedDate.value
-                                                            .day ==
-                                                        today
-                                                    ? IconButton(
-                                                        onPressed: () => {
-                                                          Get.toNamed(
-                                                            '/attendance',
-                                                            parameters: {
-                                                              'canEdit': 'true',
-                                                              'bhaag_class_section_id':
-                                                                  modifiedSessions[
+                                                        : Container(),
+                                                    dashboardC.selectedDate
+                                                                .value.day ==
+                                                            today
+                                                        ? IconButton(
+                                                            onPressed: () => {
+                                                              Get.toNamed(
+                                                                '/attendance',
+                                                                parameters: {
+                                                                  'canEdit':
+                                                                      'true',
+                                                                  'bhaag_class_section_id': modifiedSessions[
                                                                           index]
                                                                       .bhaagClassSection
                                                                       .id
                                                                       .toString(),
-                                                              'session_id':
-                                                                  modifiedSessions[
-                                                                          index]
-                                                                      .id
-                                                                      .toString(),
+                                                                  'session_id':
+                                                                      modifiedSessions[
+                                                                              index]
+                                                                          .id
+                                                                          .toString(),
+                                                                },
+                                                              ),
                                                             },
-                                                          ),
-                                                        },
-                                                        icon: const Icon(
-                                                          Icons.edit,
-                                                          color:
-                                                              AppColors.primary,
-                                                        ),
-                                                      )
-                                                    : Container(),
-                                              ],
+                                                            icon: const Icon(
+                                                              Icons.edit,
+                                                              color: AppColors
+                                                                  .primary,
+                                                            ),
+                                                          )
+                                                        : Container(),
+                                                  ],
+                                                ),
+                                              ),
                                             ),
                                           );
                                         },

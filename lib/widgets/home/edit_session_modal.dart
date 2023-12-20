@@ -7,7 +7,7 @@ import 'package:pathshala/pages/home/models/session_model.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/app_text_styles.dart';
 import 'package:pathshala/utils/functions.dart';
-import 'package:pathshala/widgets/loading_button.dart';
+import 'package:pathshala/widgets/buttons/loading_button.dart';
 import 'package:pathshala/widgets/pickers/date_picker.dart';
 
 class EditSessionModal extends StatefulWidget {

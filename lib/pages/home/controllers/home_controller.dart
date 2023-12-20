@@ -63,4 +63,26 @@ class HomeController extends GetxController {
       showErrorMessage(e.toString());
     }
   }
+
+  Future<String> cancelSessionHandler({
+    required String sessionId,
+  }) async {
+    try {
+      final GenericApiResponse response = await _sessionService.editSession({
+        "session_id": sessionId,
+        "is_active": false,
+      });
+
+      if (response.status == 'success') {
+        return 'Success';
+      } else {
+        final errorMessage = response.error.message;
+        showErrorMessage(errorMessage);
+        return 'Error';
+      }
+    } on Exception catch (e) {
+      showErrorMessage(e.toString());
+      return 'Error';
+    }
+  }
 }

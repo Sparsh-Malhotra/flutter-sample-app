@@ -12,8 +12,8 @@ import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/app_text_styles.dart';
 import 'package:pathshala/utils/curves/small_curve.dart';
 import 'package:pathshala/utils/functions.dart';
-import 'package:pathshala/widgets/large_button.dart';
-import 'package:pathshala/widgets/loading_button.dart';
+import 'package:pathshala/widgets/buttons/large_button.dart';
+import 'package:pathshala/widgets/buttons/loading_button.dart';
 import 'package:pathshala/widgets/widget_with_role.dart';
 
 class AttendanceScreen extends StatefulWidget {
