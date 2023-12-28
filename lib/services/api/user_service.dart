@@ -36,19 +36,19 @@ class UserService {
         final offlineData = response.data['data']['offline'] as List<dynamic>;
         final List<SessionModel> sessionArray = [];
 
-        onlineData.forEach((element) {
+        for (var element in onlineData) {
           sessionArray.add(SessionModel.fromJson({
             ...element,
             'mode': 'online',
           }));
-        });
+        }
 
-        offlineData.forEach((element) {
+        for (var element in offlineData) {
           sessionArray.add(SessionModel.fromJson({
             ...element,
             'mode': 'offline',
           }));
-        });
+        }
 
         return sessionArray;
       } else {

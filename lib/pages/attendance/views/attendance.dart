@@ -19,8 +19,8 @@ import 'package:pathshala/widgets/widget_with_role.dart';
 class AttendanceScreen extends StatefulWidget {
   AttendanceScreen({super.key, this.canEdit = true});
   bool canEdit = Get.parameters['canEdit'] == 'true';
-  String? bhaag_class_section_id = Get.parameters['bhaag_class_section_id'];
-  String? session_id = Get.parameters['session_id'];
+  String? bhaagClassSectionId = Get.parameters['bhaag_class_section_id'];
+  String? sessionId = Get.parameters['session_id'];
 
   @override
   State<AttendanceScreen> createState() {
@@ -45,10 +45,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     try {
       isLoading.value = true;
       final response = await _attendanceService
-          .getStudents(widget.bhaag_class_section_id ?? '');
+          .getStudents(widget.bhaagClassSectionId ?? '');
 
       if (response.status == 'success') {
-        PresentAttendeesResponse _presentAttendeesResponse =
+        PresentAttendeesResponse presentAttendeesResponse =
             await fetchPresentAttendees();
         List<Attendee> temp = response.data.map((element) {
           return Attendee(
@@ -56,7 +56,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
             name:
                 '${element.profile['first_name']} ${element.profile['middle_name'] != null ? '${element.profile['middle_name'] + ' '}' : ''}${element.profile['last_name'] ?? ''}',
             alias: element.profile['alias'],
-            isPresent: _presentAttendeesResponse.data.contains(element.id),
+            isPresent: presentAttendeesResponse.data.contains(element.id),
             profileId: element.profile['id'].toString(),
           );
         }).toList();
@@ -64,10 +64,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
         students.value = temp;
       }
     } on DioException catch (e) {
-      print(e);
+      // print(e);
       handleDioError(e);
     } catch (e) {
-      print(e);
+      // print(e);
     } finally {
       isLoading.value = false;
     }
@@ -77,16 +77,16 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     try {
       final response = await _attendanceService.getPresentAttendees(
           DateFormat('yyyy-MM-dd').format(_homeController.selectedDate.value),
-          widget.bhaag_class_section_id ?? '');
+          widget.bhaagClassSectionId ?? '');
 
       if (response.status == 'success') {
         return response;
       }
     } on DioException catch (e) {
-      print(e);
+      // print(e);
       handleDioError(e);
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 
@@ -104,12 +104,12 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
 
   void handleChangeAlias(String profileId, String alias) {
     final temp = students.value;
-    temp.forEach((element) {
-      if (element.profileId == profileId) {
-        element.alias = alias;
+    for (int i = 0; i < temp.length; i++) {
+      if (temp[i].profileId == profileId) {
+        temp[i].alias = alias;
+        break; 
       }
-    });
-
+    }
     students.value = temp;
   }
 
@@ -196,7 +196,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
           students.value.where((stud) => stud.isPresent).toList();
       final response = await _attendanceService.markAttendance(
         {
-          'session_id': widget.session_id,
+          'sessionId': widget.sessionId,
           'students_ids':
               present.where((e) => e.isPresent).map((e) => e.id).toList(),
         },
@@ -206,10 +206,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
         Get.toNamed('/home');
       }
     } on DioException catch (e) {
-      print(e);
+      // print(e);
       handleDioError(e);
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 

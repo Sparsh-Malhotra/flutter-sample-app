@@ -73,5 +73,5 @@ String formatTimeOfDay(TimeOfDay timeOfDay) {
 }
 
 String formatAssetsUrl(String url) {
-  return '${baseUrl}${url}';
+  return '$baseUrl$url';
 }

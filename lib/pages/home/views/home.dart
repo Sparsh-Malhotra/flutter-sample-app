@@ -63,10 +63,10 @@ class _HomeScreenState extends State<HomeScreen> {
         GetStorage().write('user_details', responses[1].toJson());
       }
     } on DioException catch (e) {
-      print(e);
+      // print(e);
       handleDioError(e);
     } catch (e) {
-      print(e);
+      // print(e);
     } finally {
       isLoading.value = false;
     }
@@ -79,10 +79,10 @@ class _HomeScreenState extends State<HomeScreen> {
           DateFormat('yyyy-MM-dd').format(dashboardC.selectedDate.value));
       dashboardC.sessions.value = response;
     } on DioException catch (e) {
-      print(e);
+      // print(e);
       handleDioError(e);
     } catch (e) {
-      print(e);
+      // print(e);
     } finally {
       isLoading.value = false;
     }
@@ -521,7 +521,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         .copyWith(color: AppColors.white),
                                   ),
                                   Text(
-                                    '${Roles.values[userDetails['profile']['groups'][0]].name}',
+                                    Roles.values[userDetails['profile']['groups'][0]].name,
                                     style: AppTextStyle.regularWhite14,
                                   ),
                                 ],

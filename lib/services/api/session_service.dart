@@ -23,10 +23,10 @@ class SessionService {
           error: ApiError.fromJson(response.data['error'] ?? {}),
         );
       }
-    } on DioException catch (e) {
+    } on DioException catch (_) {
       const errorMessage = 'Unexpected error occurred';
       throw Exception(errorMessage);
-    } catch (e) {
+    } catch (_) {
       // Handle other exceptions
       const errorMessage = 'Unexpected error occurred';
       throw Exception(errorMessage);
