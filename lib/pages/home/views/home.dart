@@ -168,11 +168,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           Row(
                             children: [
                               menuItem(
-                                  'homework_icon.png', 'Homework', () => {}),
-                              menuItem('notice_board_icon.png', 'Notice Board',
+                                  'homework_icon.png', 'Books', () => {}),
+                              menuItem('video_library.png', 'Video Library',
                                   () => {}),
                               menuItem(
-                                  'calendar_icon.png', 'Timetable', () => {}),
+                                  'notice_board_icon.png', 'Resources', () => {}),
                             ],
                           ),
                           const SizedBox(
