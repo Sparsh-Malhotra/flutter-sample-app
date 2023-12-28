@@ -32,7 +32,7 @@ class LoginController extends GetxController {
         GetStorage().write('refresh_token', loginResponse.data.refreshToken);
         Get.offNamed('/home');
       } else {
-        final errorMessage = loginResponse.error?.message ?? 'Unknown error';
+        final errorMessage = loginResponse.error.message;
         showErrorMessage(errorMessage);
       }
     } on Exception catch (e) {

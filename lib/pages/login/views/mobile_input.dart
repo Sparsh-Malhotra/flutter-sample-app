@@ -22,7 +22,7 @@ class MobileInput extends StatefulWidget {
 
 class _MobileInputState extends State<MobileInput> {
   LoginController loginController = Get.put(LoginController());
-  var _hasObscuredText = true.obs;
+  final _hasObscuredText = true.obs;
 
   @override
   Widget build(BuildContext context) {

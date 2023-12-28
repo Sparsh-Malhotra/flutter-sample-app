@@ -50,7 +50,7 @@ class _AttendanceCardState extends State<AttendanceCard> {
   Future<void> handleAddAlias() async {
     try {
       isLoading.value = true;
-      UserDetailsModel response = await _userService.updateProfile({
+      UserDetailsModel _ = await _userService.updateProfile({
         'user_profile_id': widget.profileId,
         'profile.alias': _aliasController.text,
       });

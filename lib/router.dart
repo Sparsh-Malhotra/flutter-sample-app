@@ -28,7 +28,7 @@ final getPages = [
   ),
   GetPage(
     name: Routes.homeScreen,
-    page: () => HomeScreen(),
+    page: () => const HomeScreen(),
   ),
   GetPage(
     name: Routes.attendanceScreen,

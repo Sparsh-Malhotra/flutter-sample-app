@@ -47,7 +47,7 @@ class RegisterController extends GetxController {
       if (registerResponse.status == 'success') {
         Get.offNamed('/login');
       } else {
-        final errorMessage = registerResponse.error?.message ?? 'Unknown error';
+        final errorMessage = registerResponse.error.message;
         showErrorMessage(errorMessage);
       }
     } on Exception catch (e) {

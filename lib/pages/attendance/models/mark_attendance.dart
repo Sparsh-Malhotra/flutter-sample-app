@@ -1,10 +1,10 @@
 import 'package:pathshala/core/models/api_error_model.dart';
 
 class MarkAttendanceRequest {
-  int session_id;
-  List<int> students_ids;
+  int sessionId;
+  List<int> studentsIds;
 
-  MarkAttendanceRequest({required this.session_id, required this.students_ids});
+  MarkAttendanceRequest({required this.sessionId, required this.studentsIds});
 }
 
 class MarkAttendanceResponse {

@@ -20,7 +20,7 @@ Widget inputFile({
   bool? isUsername,
 }) {
   final List<TextInputFormatter> inputFormatters = [];
-  if (isUsername != null && isUsername) {
+  if (isUsername ?? false) {
     inputFormatters.add(FilteringTextInputFormatter.allow(
       RegExp(r"[a-zA-Z0-9]"),
     ));
@@ -49,23 +49,19 @@ Widget inputFile({
         height: 5,
       ),
       TextFormField(
-        controller: controller != null
-            ? controller
-            : value != null
-                ? TextEditingController(text: value)
-                : null,
+        controller: controller ?? (value != null ? TextEditingController(text: value) : null),
         readOnly: readOnly,
-        obscureText: obscureText,
+        obscureText: obscureText ?? false,
         keyboardType: keyboardType,
         onTap: onTap,
         onChanged: onChange,
         onSaved: onSave,
         decoration: InputDecoration(
           suffixIcon: suffixIcon,
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+          contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
           focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.primary)),
+            borderSide: BorderSide(color: AppColors.primary),
+          ),
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.primarySplash),
           ),
@@ -75,9 +71,7 @@ Widget inputFile({
         ),
         validator: validator,
         inputFormatters: inputFormatters,
-        textCapitalization: isUsername != null && isUsername
-            ? TextCapitalization.characters
-            : TextCapitalization.none,
+        textCapitalization: isUsername ?? false ? TextCapitalization.characters : TextCapitalization.none,
       ),
       const SizedBox(
         height: 10,
