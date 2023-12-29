@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pathshala/pages/books/controllers/books_controller.dart';
-import 'package:pathshala/utils/app_colors.dart';
+import 'package:pathshala/pages/books/views/book_tile.dart';
 import 'package:pathshala/utils/curves/small_curve.dart';
 import 'package:pathshala/utils/functions.dart';
-import 'package:pathshala/widgets/resource_image.dart';
+import 'package:pathshala/utils/resources_manager.dart';
 
 class BooksScreen extends StatefulWidget {
   const BooksScreen({super.key});
@@ -15,6 +15,15 @@ class BooksScreen extends StatefulWidget {
 
 class _BooksScreenState extends State<BooksScreen> {
   final BooksController _booksController = Get.put(BooksController());
+  final resourcesManager = ResourcesManager();
+  var isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    resourcesManager.init();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -53,12 +62,8 @@ class _BooksScreenState extends State<BooksScreen> {
                           final book = snapshot.data![index];
                           return Card(
                             margin: const EdgeInsets.only(bottom: 20),
-                            child: ListTile(
-                              tileColor: AppColors.cardColor,
-                              leading: const ResourceImage(),
-                              title: Text(book.name!),
-                              trailing: const Icon(Icons.more_vert),
-                            ),
+                            clipBehavior: Clip.antiAlias,
+                            child: BookTile(book: book),
                           );
                         },
                       )
@@ -84,4 +89,18 @@ class _BooksScreenState extends State<BooksScreen> {
       ),
     );
   }
+
+  // Widget _buildLeadingIcon(Book book) {
+  //   return Obx(() {
+  //     if (_booksController.isDownloading.value) {
+  //       return CustomPaint(
+  //         painter: CirclePaint(_booksController.progress.value),
+  //       );
+  //     } else if (_booksController.isBookDownloaded(book.name!)) {
+  //       return const Icon(Icons.file_open);
+  //     } else {
+  //       return const Icon(Icons.file_download);
+  //     }
+  //   });
+  // }
 }
