@@ -196,7 +196,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
           students.value.where((stud) => stud.isPresent).toList();
       final response = await _attendanceService.markAttendance(
         {
-          'sessionId': widget.sessionId,
+          'session_id': widget.sessionId,
           'students_ids':
               present.where((e) => e.isPresent).map((e) => e.id).toList(),
         },

@@ -231,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       style: AppTextStyle.boldBlack18,
                                     ),
                                     ToggleSwitch(
-                                      minWidth: 67.0,
+                                      minWidth: 70.0,
                                       initialLabelIndex:
                                           sessionMode.value == 'offline'
                                               ? 0
@@ -405,7 +405,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   children: [
                                                     Expanded(
                                                       child: Text(
-                                                        '$sessionName ($section)',
+                                                        '$sessionName-$section',
                                                         style: AppTextStyle
                                                             .mediumBlack18,
                                                       ),
@@ -491,7 +491,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Padding(
                         padding: EdgeInsets.only(bottom: appBarPad),
                         child: TopBar(
-                          height: topBarHeight,
+                          height: topBarHeight+30,
                           width: width,
                           leading: GestureDetector(
                             onTap: () => {},
