@@ -173,9 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               menuItem(
                                 'video_library.png',
                                 'Video Library',
-                                () {
-                                  Get.toNamed('/video-library');
-                                },
+                                () {},
                               ),
                               menuItem('notice_board_icon.png', 'Notice Board',
                                   () => {}),
