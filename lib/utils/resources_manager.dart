@@ -7,8 +7,8 @@ class ResourcesManager {
   final Dio _dio = Dio();
 
   Future<String> get booksLocalPath async {
-    final directory = await getApplicationDocumentsDirectory();
-    return '${directory.path}/books';
+    final directory = await getExternalStorageDirectory();
+    return '${directory?.path}/books';
   }
 
   Future<File> _localBooksFile(String filename) async {

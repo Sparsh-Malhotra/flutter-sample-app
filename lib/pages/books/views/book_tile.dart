@@ -64,10 +64,9 @@ class _BookTileState extends State<BookTile> {
                   : null,
               onTap: () async {
                 if (await _bookController.isBookDownloaded(widget.book.name!)) {
-                  final directory = await getApplicationDocumentsDirectory();
+                  final directory = await getExternalStorageDirectory();
                   final filePath =
-                      '${directory.path}/books/${widget.book.name}.pdf';
-
+                      '${directory?.path}/books/${widget.book.name}.pdf';
                   await OpenFile.open(filePath, type: 'application/pdf');
                 } else {
                   await _bookController.downloadBookHandler(
