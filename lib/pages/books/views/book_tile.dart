@@ -71,13 +71,15 @@ class _BookTileState extends State<BookTile> {
           onTap: () async {
             if (await _bookController.isBookDownloaded(widget.book.name!)) {
               final directory = await getApplicationDocumentsDirectory();
-              final filePath = '${directory.path}/books/${widget.book.name}';
+              final filePath =
+                  '${directory.path}/books/${widget.book.name}.pdf';
 
               await OpenFile.open(filePath, type: 'application/pdf');
             } else {
               await _bookController.downloadBookHandler(
                 widget.book.name!,
                 widget.book.book!,
+                // "https://drive.google.com/uc?export=download&id=1NtG84hMYxVbaQYK2w1bsgLEmwI9zZUwG",
               );
             }
           },
