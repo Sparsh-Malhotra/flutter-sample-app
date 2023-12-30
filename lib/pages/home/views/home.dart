@@ -167,12 +167,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Row(
                             children: [
+                              menuItem('homework_icon.png', 'Books', () {
+                                Get.toNamed('/books');
+                              }),
                               menuItem(
-                                  'homework_icon.png', 'Books', () => {}),
-                              menuItem('video_library.png', 'Video Library',
+                                'video_library.png',
+                                'Video Library',
+                                () {
+                                  Get.toNamed('/video-library');
+                                },
+                              ),
+                              menuItem('notice_board_icon.png', 'Notice Board',
                                   () => {}),
-                              menuItem(
-                                  'notice_board_icon.png', 'Resources', () => {}),
                             ],
                           ),
                           const SizedBox(
