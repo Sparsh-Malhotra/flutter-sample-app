@@ -13,7 +13,7 @@ class ResourcesManager {
 
   Future<File> _localBooksFile(String filename) async {
     final path = await booksLocalPath;
-    return File('$path/$filename');
+    return File('$path/$filename.pdf');
   }
 
   Future<void> init() async {

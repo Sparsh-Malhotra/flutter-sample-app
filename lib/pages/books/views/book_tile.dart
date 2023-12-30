@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pathshala/pages/books/controllers/book_controller.dart';
 import 'package:pathshala/pages/books/models/books_response.dart';
 import 'package:pathshala/utils/app_colors.dart';
+import 'package:pathshala/utils/resources_manager.dart';
 
 class BookTile extends StatefulWidget {
   const BookTile({Key? key, required this.book}) : super(key: key);
@@ -17,6 +18,7 @@ class BookTile extends StatefulWidget {
 
 class _BookTileState extends State<BookTile> {
   late BookController _bookController;
+  final ResourcesManager _resourcesManager = ResourcesManager();
 
   @override
   void initState() {
@@ -43,45 +45,39 @@ class _BookTileState extends State<BookTile> {
           title: Text(widget.book.name!),
         );
       } else {
-        return ListTile(
-          tileColor: AppColors.cardColor,
-          leading: FutureBuilder<bool>(
-            future: _bookController.isBookDownloaded(widget.book.name!),
-            builder: (context, bookSnapshot) {
-              if (bookSnapshot.hasData && bookSnapshot.data!) {
-                return const Icon(Icons.file_open);
-              } else {
-                return const Icon(Icons.file_download);
-              }
-            },
-          ),
-          title: Text(widget.book.name!),
-          // trailing: FutureBuilder<bool>(
-          //   future: _bookController.isBookDownloaded(widget.book.name!),
-          //   builder: (context, bookSnapshot) {
-          //     if (bookSnapshot.hasData && bookSnapshot.data!) {
-          //       return const Icon(
-          //         Icons.delete,
-          //       );
-          //     } else {
-          //       return Container();
-          //     }
-          //   },
-          // ),
-          onTap: () async {
-            if (await _bookController.isBookDownloaded(widget.book.name!)) {
-              final directory = await getApplicationDocumentsDirectory();
-              final filePath =
-                  '${directory.path}/books/${widget.book.name}.pdf';
+        return FutureBuilder<bool>(
+          future: _bookController.isBookDownloaded(widget.book.name!),
+          builder: (context, bookSnapshot) {
+            return ListTile(
+              tileColor: AppColors.cardColor,
+              leading: (bookSnapshot.hasData && bookSnapshot.data!)
+                  ? const Icon(Icons.file_open)
+                  : const Icon(Icons.file_download),
+              title: Text(widget.book.name!),
+              trailing: (bookSnapshot.hasData && bookSnapshot.data!)
+                  ? IconButton(
+                      onPressed: () async {
+                        await _resourcesManager.deleteBook(widget.book.name!);
+                        setState(() {});
+                      },
+                      icon: const Icon(Icons.delete))
+                  : null,
+              onTap: () async {
+                if (await _bookController.isBookDownloaded(widget.book.name!)) {
+                  final directory = await getApplicationDocumentsDirectory();
+                  final filePath =
+                      '${directory.path}/books/${widget.book.name}.pdf';
 
-              await OpenFile.open(filePath, type: 'application/pdf');
-            } else {
-              await _bookController.downloadBookHandler(
-                widget.book.name!,
-                widget.book.book!,
-                // "https://drive.google.com/uc?export=download&id=1NtG84hMYxVbaQYK2w1bsgLEmwI9zZUwG",
-              );
-            }
+                  await OpenFile.open(filePath, type: 'application/pdf');
+                } else {
+                  await _bookController.downloadBookHandler(
+                    widget.book.name!,
+                    widget.book.book!,
+                    // "https://drive.google.com/uc?export=download&id=1NtG84hMYxVbaQYK2w1bsgLEmwI9zZUwG",
+                  );
+                }
+              },
+            );
           },
         );
       }

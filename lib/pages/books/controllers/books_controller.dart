@@ -1,9 +1,4 @@
-import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pathshala/pages/books/models/books_response.dart';
 import 'package:pathshala/services/api/resources_service.dart';
 import 'package:pathshala/utils/functions.dart';
