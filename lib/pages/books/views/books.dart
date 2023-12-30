@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pathshala/pages/books/controllers/books_controller.dart';
 import 'package:pathshala/pages/books/views/book_tile.dart';
+import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/curves/small_curve.dart';
 import 'package:pathshala/utils/functions.dart';
 import 'package:pathshala/utils/resources_manager.dart';
@@ -16,7 +17,6 @@ class BooksScreen extends StatefulWidget {
 class _BooksScreenState extends State<BooksScreen> {
   final BooksController _booksController = Get.put(BooksController());
   final resourcesManager = ResourcesManager();
-  var isLoading = false;
 
   @override
   void initState() {
@@ -36,7 +36,9 @@ class _BooksScreenState extends State<BooksScreen> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: AppColors.primary,
+              ),
             );
           } else if (snapshot.hasError) {
             return const Center(
@@ -89,18 +91,4 @@ class _BooksScreenState extends State<BooksScreen> {
       ),
     );
   }
-
-  // Widget _buildLeadingIcon(Book book) {
-  //   return Obx(() {
-  //     if (_booksController.isDownloading.value) {
-  //       return CustomPaint(
-  //         painter: CirclePaint(_booksController.progress.value),
-  //       );
-  //     } else if (_booksController.isBookDownloaded(book.name!)) {
-  //       return const Icon(Icons.file_open);
-  //     } else {
-  //       return const Icon(Icons.file_download);
-  //     }
-  //   });
-  // }
 }
