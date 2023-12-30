@@ -104,11 +104,12 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
 
   void handleChangeAlias(String profileId, String alias) {
     final temp = students.value;
-    temp.forEach((element) {
+    students.value = temp.map((element) {
       if (element.profileId == profileId) {
         element.alias = alias;
       }
-    });
+      return element;
+    }).toList();
 
     students.value = temp;
   }
