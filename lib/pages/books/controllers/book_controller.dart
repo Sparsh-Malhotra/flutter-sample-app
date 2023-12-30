@@ -22,7 +22,9 @@ class BookController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        final directory = await getExternalStorageDirectory();
+        final directory = Platform.isIOS
+            ? await getApplicationDocumentsDirectory()
+            : await getExternalStorageDirectory();
         final filePath = '${directory?.path}/books/$filename.pdf';
 
         // Save the downloaded content to a file in the documents directory
@@ -41,7 +43,9 @@ class BookController extends GetxController {
 
   Future<bool> isBookDownloaded(String filename) async {
     // Get the app's documents directory
-    final directory = await getExternalStorageDirectory();
+    final directory = Platform.isIOS
+        ? await getApplicationDocumentsDirectory()
+        : await getExternalStorageDirectory();
     final filePath = '${directory?.path}/books/$filename.pdf';
 
     // Check if the file exists

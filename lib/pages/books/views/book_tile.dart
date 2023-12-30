@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
@@ -64,7 +66,9 @@ class _BookTileState extends State<BookTile> {
                   : null,
               onTap: () async {
                 if (await _bookController.isBookDownloaded(widget.book.name!)) {
-                  final directory = await getExternalStorageDirectory();
+                  final directory = Platform.isIOS
+                      ? await getApplicationDocumentsDirectory()
+                      : await getExternalStorageDirectory();
                   final filePath =
                       '${directory?.path}/books/${widget.book.name}.pdf';
                   await OpenFile.open(filePath, type: 'application/pdf');
