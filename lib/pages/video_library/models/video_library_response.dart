@@ -37,8 +37,8 @@ class VideoLibraryResponse {
 
 class VideoInfo {
   int count;
-  int? next;
-  int? previous;
+  String? next;
+  String? previous;
   List<Video> results;
 
   VideoInfo({

@@ -5,10 +5,14 @@ import 'package:pathshala/utils/functions.dart';
 
 class VideoLibraryController extends GetxController {
   final ResourcesService _resourcesService = Get.put(ResourcesService());
+  RxnString category = RxnString(null);
+  RxnString bhaag = RxnString(null);
 
-  Future<VideoInfo> getVideosHandler() async {
+  Future<VideoInfo> getVideosHandler(Map<dynamic, String> params) async {
     try {
-      final response = await _resourcesService.getVideos({"page": 1});
+      final response = await _resourcesService.getVideos(
+        {"page": 1, 'category': category.value, ...params},
+      );
       if (response.status == 'success') {
         return response.data;
       } else {
