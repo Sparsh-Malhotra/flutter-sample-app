@@ -6,6 +6,7 @@ import 'package:pathshala/pages/books/controllers/books_controller.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/app_text_styles.dart';
 import 'package:pathshala/widgets/buttons/large_button.dart';
+import 'package:pathshala/widgets/buttons/large_outlined_button.dart';
 
 class VideoFiltersModal extends StatelessWidget {
   VideoFiltersModal({super.key, required this.onApply});
@@ -81,7 +82,7 @@ class VideoFiltersModal extends StatelessWidget {
                               items:
                                   snapshot.data!.map((e) => e.name!).toList(),
                               onChanged: (value) {
-                                category.value = snapshot.data!
+                                bhaag.value = snapshot.data!
                                     .where((element) => element.name == value)
                                     .toList()[0]
                                     .id
@@ -115,6 +116,7 @@ class VideoFiltersModal extends StatelessWidget {
                             ),
                             CustomDropdown<String>(
                               hintText: '',
+                              initialItem: category.value,
                               items: categoryOptions,
                               onChanged: (value) {
                                 category.value = value;
@@ -149,6 +151,25 @@ class VideoFiltersModal extends StatelessWidget {
                                 onPress: () {
                                   Get.back();
                                   onApply(bhaag.value, category.value);
+                                },
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            SizedBox(
+                              height: 50,
+                              width: width,
+                              child: LargeOutlinedButton(
+                                text: 'Clear',
+                                onPress: () {
+                                  Get.back();
+                                  if (bhaag.value != null ||
+                                      category.value != null) {
+                                    bhaag.value = null;
+                                    category.value = null;
+                                    onApply(bhaag.value, category.value);
+                                  }
                                 },
                               ),
                             ),
