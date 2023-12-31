@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pathshala/pages/video_library/controllers/video_library_controller.dart';
+import 'package:pathshala/pages/video_library/models/video_library_response.dart';
 import 'package:pathshala/pages/video_library/views/video_filters.dart';
 import 'package:pathshala/pages/video_library/views/video_tile.dart';
 import 'package:pathshala/utils/app_colors.dart';
@@ -19,18 +21,12 @@ class _VideoLibraryScreenState extends State<VideoLibraryScreen> {
   final VideoLibraryController _videoLibraryController =
       Get.put(VideoLibraryController());
 
-  final _searchTextController = TextEditingController();
   final _debouncer = Debouncer(milliseconds: 500);
-
-  @override
-  void dispose() {
-    _searchTextController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     double topBarHeight = 135;
 
     return Scaffold(
@@ -46,7 +42,7 @@ class _VideoLibraryScreenState extends State<VideoLibraryScreen> {
                 onApply: (bhaag, category) {
                   _videoLibraryController.category.value = category;
                   _videoLibraryController.bhaag.value = bhaag;
-                  setState(() {});
+                  _videoLibraryController.pagingController.refresh();
                 },
               ),
             ),
@@ -57,10 +53,10 @@ class _VideoLibraryScreenState extends State<VideoLibraryScreen> {
               Container(
                 padding: const EdgeInsets.fromLTRB(20, 132, 20, 0),
                 child: TextField(
-                  controller: _searchTextController,
+                  controller: _videoLibraryController.searchTextController,
                   onChanged: (value) {
                     _debouncer.run(() {
-                      setState(() {});
+                      _videoLibraryController.pagingController.refresh();
                     });
                   },
                   decoration: const InputDecoration(
@@ -92,39 +88,17 @@ class _VideoLibraryScreenState extends State<VideoLibraryScreen> {
                 ),
               ),
               Expanded(
-                child: FutureBuilder(
-                  future: _videoLibraryController.getVideosHandler({
-                    'search': _searchTextController.text,
-                  }),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.primary,
-                        ),
-                      );
-                    } else if (snapshot.hasError) {
-                      return const Center(
-                        child: Text('No videos found'),
-                      );
-                    } else if (snapshot.hasData &&
-                        snapshot.data!.results.isNotEmpty) {
-                      return GridView.count(
-                        padding: const EdgeInsets.all(20),
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 20,
-                        children: List.generate(
-                          snapshot.data!.results.length,
-                          (index) =>
-                              VideoTile(video: snapshot.data!.results[index]),
-                        ),
-                      );
-                    } else {
-                      return const Center(
-                        child: Text('No videos found'),
-                      );
-                    }
-                  },
+                child: PagedGridView<int, Video>(
+                  padding: const EdgeInsets.all(20),
+                  pagingController: _videoLibraryController.pagingController,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 20,
+                  ),
+                  builderDelegate: PagedChildBuilderDelegate<Video>(
+                    itemBuilder: (context, item, index) =>
+                        VideoTile(video: item),
+                  ),
                 ),
               ),
             ],
