@@ -1,21 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pathshala/pages/video_library/models/video_library_response.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/app_text_styles.dart';
 import 'package:pathshala/utils/functions.dart';
+import 'package:pathshala/widgets/resources/video_player/video_player.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart' hide Video;
 
-class VideoTile extends StatelessWidget {
-  const VideoTile({super.key, required this.video});
+class VideoTile extends StatefulWidget {
+  const VideoTile({Key? key, required this.video}) : super(key: key);
 
   final Video video;
 
   @override
-  Widget build(BuildContext context) {
-    final String videoId = extractVideoId(video.url);
+  State<VideoTile> createState() {
+    return VideoTileState();
+  }
+}
 
+class VideoTileState extends State<VideoTile> {
+  final yt = YoutubeExplode();
+
+  late String videoId;
+
+  @override
+  void initState() {
+    super.initState();
+    videoId = extractVideoId(widget.video.url);
+  }
+
+  @override
+  void dispose() {
+    yt.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        print('Image Clicked: ${video.title}');
+      onTap: () async {
+        final manifest = await yt.videos.streamsClient.getManifest(videoId);
+        Get.to(
+          () => VideoPlayer(
+            manifest: manifest,
+          ),
+        );
       },
       child: Stack(
         children: [
@@ -47,7 +76,7 @@ class VideoTile extends StatelessWidget {
             right: 50,
             child: IgnorePointer(
               child: Text(
-                video.title,
+                widget.video.title,
                 style: AppTextStyle.boldBlack12,
                 textAlign: TextAlign.center,
               ),

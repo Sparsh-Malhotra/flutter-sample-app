@@ -45,6 +45,10 @@ dependencies:
   flutter_slidable: ^3.0.1
   path_provider: ^2.1.1
   open_file: ^3.3.2
+  flick_video_player: ^0.7.0
+  video_player: ^2.8.1
+  provider: ^6.1.1
+  youtube_explode_dart: ^2.0.4
 
 dev_dependencies:
   flutter_test:
