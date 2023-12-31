@@ -75,3 +75,10 @@ String formatTimeOfDay(TimeOfDay timeOfDay) {
 String formatAssetsUrl(String url) {
   return '${baseUrl}${url}';
 }
+
+String extractVideoId(String url) {
+  RegExp regExp = RegExp(r'youtu\.be\/([a-zA-Z0-9_-]+)');
+  Match? match = regExp.firstMatch(url);
+
+  return match != null ? match.group(1)! : '6cwnBBAVIwE';
+}

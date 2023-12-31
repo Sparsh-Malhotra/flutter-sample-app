@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pathshala/pages/video_library/controllers/video_library_controller.dart';
+import 'package:pathshala/pages/video_library/views/video_tile.dart';
 import 'package:pathshala/utils/app_colors.dart';
 import 'package:pathshala/utils/curves/small_curve.dart';
 import 'package:pathshala/utils/functions.dart';
@@ -34,7 +35,7 @@ class _VideoLibraryScreenState extends State<VideoLibraryScreen> {
             );
           } else if (snapshot.hasError) {
             return const Center(
-              child: Text('No books found'),
+              child: Text('No videos found'),
             );
           } else if (snapshot.hasData) {
             return Stack(
@@ -42,22 +43,16 @@ class _VideoLibraryScreenState extends State<VideoLibraryScreen> {
                 SizedBox(
                   height: height,
                   width: width,
-                  child: ListView(
-                    physics: const BouncingScrollPhysics(),
+                  child: GridView.count(
                     padding: const EdgeInsets.only(
                         left: 20, right: 20, top: 132, bottom: 20),
-                    children: [
-                      ListView.builder(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: snapshot.data!.count,
-                        itemBuilder: (context, index) {
-                          final video = snapshot.data!.results[index];
-                          return Text('hello');
-                        },
-                      )
-                    ],
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 20,
+                    children: List.generate(
+                      snapshot.data!.results.length,
+                      (index) =>
+                          VideoTile(video: snapshot.data!.results[index]),
+                    ),
                   ),
                 ),
                 CustomPaint(

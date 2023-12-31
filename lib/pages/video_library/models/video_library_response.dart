@@ -99,7 +99,7 @@ class Video {
       title: json['title'],
       url: json['url'],
       category: json['category'],
-      bhaag: json['bhaag'],
+      bhaag: List<int>.from(json['bhaag']),
     );
   }
 
