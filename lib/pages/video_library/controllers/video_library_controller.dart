@@ -14,11 +14,14 @@ class VideoLibraryController extends GetxController {
   RxnString category = RxnString(null);
   RxnString bhaag = RxnString(null);
   final searchTextController = TextEditingController();
+  bool isControllerDisposed = false;
 
   @override
   void onInit() {
     pagingController.addPageRequestListener((pageKey) {
-      getVideosHandler({}, pageKey);
+      if (!isControllerDisposed) {
+        getVideosHandler({}, pageKey);
+      }
     });
     super.onInit();
   }
@@ -27,6 +30,7 @@ class VideoLibraryController extends GetxController {
   void onClose() {
     searchTextController.dispose();
     pagingController.dispose();
+    isControllerDisposed = true;
     super.onClose();
   }
 

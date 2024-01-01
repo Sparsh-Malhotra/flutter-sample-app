@@ -24,6 +24,12 @@ class _VideoLibraryScreenState extends State<VideoLibraryScreen> {
   final _debouncer = Debouncer(milliseconds: 500);
 
   @override
+  void dispose() {
+    _videoLibraryController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
