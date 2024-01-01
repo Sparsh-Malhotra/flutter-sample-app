@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:pathshala/pages/video_library/controllers/video_library_controller.dart';
-import 'package:pathshala/pages/video_library/models/video_library_response.dart';
-import 'package:pathshala/pages/video_library/views/video_filters.dart';
-import 'package:pathshala/pages/video_library/views/video_tile.dart';
-import 'package:pathshala/utils/app_colors.dart';
-import 'package:pathshala/utils/curves/small_curve.dart';
-import 'package:pathshala/utils/debounce.dart';
-import 'package:pathshala/utils/functions.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/video_library/controllers/video_library_controller.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/video_library/models/video_library_response.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/video_library/views/video_filters.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/video_library/views/video_tile.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_colors.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/curves/small_curve.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/debounce.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/functions.dart';
 
 class VideoLibraryScreen extends StatefulWidget {
   const VideoLibraryScreen({super.key});

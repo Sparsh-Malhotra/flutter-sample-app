@@ -1,9 +1,9 @@
+import 'package:com.jainyouthnoida.pathshala/core/models/api_error_model.dart';
+import 'package:com.jainyouthnoida.pathshala/core/models/generic_response.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/login/models/login_model.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/register/models/register_model.dart';
+import 'package:com.jainyouthnoida.pathshala/services/dio_client.dart';
 import 'package:dio/dio.dart';
-import 'package:pathshala/core/models/api_error_model.dart';
-import 'package:pathshala/core/models/generic_response.dart';
-import 'package:pathshala/pages/login/models/login_model.dart';
-import 'package:pathshala/pages/register/models/register_model.dart';
-import 'package:pathshala/services/dio_client.dart';
 
 class AuthService {
   final Dio _dio = DioClient.instance;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pathshala/pages/video_library/models/video_library_response.dart';
-import 'package:pathshala/utils/app_colors.dart';
-import 'package:pathshala/utils/app_text_styles.dart';
-import 'package:pathshala/utils/functions.dart';
-import 'package:pathshala/widgets/resources/video_player/video_player.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/video_library/models/video_library_response.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_colors.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_text_styles.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/functions.dart';
+import 'package:com.jainyouthnoida.pathshala/widgets/resources/video_player/video_player.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart' hide Video;
 
 class VideoTile extends StatefulWidget {

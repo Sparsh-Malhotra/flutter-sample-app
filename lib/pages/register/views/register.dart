@@ -2,15 +2,15 @@ import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pathshala/app_contants.dart';
-import 'package:pathshala/pages/register/controllers/register_controller.dart';
-import 'package:pathshala/utils/app_colors.dart';
-import 'package:pathshala/utils/app_text_styles.dart';
-import 'package:pathshala/utils/curves/small_curve.dart';
-import 'package:pathshala/utils/functions.dart';
-import 'package:pathshala/widgets/input.dart';
-import 'package:pathshala/widgets/buttons/loading_button.dart';
-import 'package:pathshala/widgets/pickers/date_picker.dart';
+import 'package:com.jainyouthnoida.pathshala/app_contants.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/register/controllers/register_controller.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_colors.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_text_styles.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/curves/small_curve.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/functions.dart';
+import 'package:com.jainyouthnoida.pathshala/widgets/input.dart';
+import 'package:com.jainyouthnoida.pathshala/widgets/buttons/loading_button.dart';
+import 'package:com.jainyouthnoida.pathshala/widgets/pickers/date_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

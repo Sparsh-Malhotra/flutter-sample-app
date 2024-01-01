@@ -1,7 +1,7 @@
-import 'package:pathshala/app_contants.dart';
-import 'package:pathshala/utils/app_text_styles.dart';
-import 'package:pathshala/utils/app_colors.dart';
-import 'package:pathshala/widgets/cards/topbar.dart';
+import 'package:com.jainyouthnoida.pathshala/app_contants.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_colors.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_text_styles.dart';
+import 'package:com.jainyouthnoida.pathshala/widgets/cards/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

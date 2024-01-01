@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pathshala/pages/books/controllers/books_controller.dart';
-import 'package:pathshala/pages/books/views/book_tile.dart';
-import 'package:pathshala/utils/app_colors.dart';
-import 'package:pathshala/utils/curves/small_curve.dart';
-import 'package:pathshala/utils/functions.dart';
-import 'package:pathshala/utils/resources_manager.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/books/controllers/books_controller.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/books/views/book_tile.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_colors.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/curves/small_curve.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/functions.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/resources_manager.dart';
 
 class BooksScreen extends StatefulWidget {
   const BooksScreen({super.key});

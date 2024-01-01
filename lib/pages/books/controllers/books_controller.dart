@@ -1,7 +1,7 @@
+import 'package:com.jainyouthnoida.pathshala/pages/books/models/books_response.dart';
+import 'package:com.jainyouthnoida.pathshala/services/api/resources_service.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/functions.dart';
 import 'package:get/get.dart';
-import 'package:pathshala/pages/books/models/books_response.dart';
-import 'package:pathshala/services/api/resources_service.dart';
-import 'package:pathshala/utils/functions.dart';
 
 class BooksController extends GetxController {
   final ResourcesService _resourcesService = Get.put(ResourcesService());

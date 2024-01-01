@@ -1,7 +1,7 @@
+import 'package:com.jainyouthnoida.pathshala/pages/home/models/session_model.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/home/models/user_details_model.dart';
+import 'package:com.jainyouthnoida.pathshala/services/dio_client.dart';
 import 'package:dio/dio.dart';
-import 'package:pathshala/pages/home/models/session_model.dart';
-import 'package:pathshala/pages/home/models/user_details_model.dart';
-import 'package:pathshala/services/dio_client.dart';
 
 class UserService {
   final Dio _dio = DioClient.instance;

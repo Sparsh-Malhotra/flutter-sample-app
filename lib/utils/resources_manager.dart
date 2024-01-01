@@ -1,7 +1,7 @@
 import 'dart:io';
+import 'package:com.jainyouthnoida.pathshala/utils/functions.dart';
 import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pathshala/utils/functions.dart';
 
 class ResourcesManager {
   final Dio _dio = Dio();

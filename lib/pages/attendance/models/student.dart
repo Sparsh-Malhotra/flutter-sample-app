@@ -1,4 +1,4 @@
-import 'package:pathshala/core/models/api_error_model.dart';
+import 'package:com.jainyouthnoida.pathshala/core/models/api_error_model.dart';
 
 class SessionStudent {
   String status;

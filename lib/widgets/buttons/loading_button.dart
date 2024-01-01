@@ -1,6 +1,6 @@
+import 'package:com.jainyouthnoida.pathshala/utils/app_colors.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_text_styles.dart';
 import 'package:easy_loading_button/easy_loading_button.dart';
-import 'package:pathshala/utils/app_text_styles.dart';
-import 'package:pathshala/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class LoadingButton extends StatelessWidget {

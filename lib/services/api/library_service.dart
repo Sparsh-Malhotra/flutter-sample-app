@@ -1,7 +1,7 @@
+import 'package:com.jainyouthnoida.pathshala/core/models/api_error_model.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/books/models/books_response_model.dart';
+import 'package:com.jainyouthnoida.pathshala/services/dio_client.dart';
 import 'package:dio/dio.dart';
-import 'package:pathshala/core/models/api_error_model.dart';
-import 'package:pathshala/pages/books/models/books_response_model.dart';
-import 'package:pathshala/services/dio_client.dart';
 
 class LibraryService {
   final Dio _dio = DioClient.instance;

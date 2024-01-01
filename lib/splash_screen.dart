@@ -1,6 +1,6 @@
+import 'package:com.jainyouthnoida.pathshala/utils/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pathshala/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {

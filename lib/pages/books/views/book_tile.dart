@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pathshala/pages/books/controllers/book_controller.dart';
-import 'package:pathshala/pages/books/models/books_response.dart';
-import 'package:pathshala/utils/app_colors.dart';
-import 'package:pathshala/utils/resources_manager.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/books/controllers/book_controller.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/books/models/books_response.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_colors.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/resources_manager.dart';
 
 class BookTile extends StatefulWidget {
   const BookTile({Key? key, required this.book}) : super(key: key);

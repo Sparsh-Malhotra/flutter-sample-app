@@ -1,7 +1,7 @@
+import 'package:com.jainyouthnoida.pathshala/widgets/resources/video_player/play_toggle.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pathshala/widgets/resources/video_player/play_toggle.dart';
 
 class VideoPlayerControls extends StatelessWidget {
   const VideoPlayerControls({Key? key, this.iconSize = 20, this.fontSize = 12})

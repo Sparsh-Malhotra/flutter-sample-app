@@ -1,4 +1,4 @@
-import 'package:pathshala/pages/home/models/user_details_model.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/home/models/user_details_model.dart';
 
 class SessionModel {
   int id;

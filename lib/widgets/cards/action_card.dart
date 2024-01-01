@@ -1,4 +1,4 @@
-import 'package:pathshala/utils/app_colors.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ActionCard extends StatelessWidget {

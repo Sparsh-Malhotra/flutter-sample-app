@@ -1,8 +1,8 @@
+import 'package:com.jainyouthnoida.pathshala/utils/app_colors.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_text_styles.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/formatters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pathshala/utils/app_colors.dart';
-import 'package:pathshala/utils/app_text_styles.dart';
-import 'package:pathshala/utils/formatters.dart';
 
 Widget inputFile({
   label,

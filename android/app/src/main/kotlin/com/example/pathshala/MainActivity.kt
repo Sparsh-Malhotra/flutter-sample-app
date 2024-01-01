@@ -1,4 +1,4 @@
-package com.example.pathshala
+package com.jainyouthnoida.pathshala
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,9 +1,9 @@
+import 'package:com.jainyouthnoida.pathshala/pages/video_library/models/video_library_response.dart';
+import 'package:com.jainyouthnoida.pathshala/services/api/resources_service.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:pathshala/pages/video_library/models/video_library_response.dart';
-import 'package:pathshala/services/api/resources_service.dart';
-import 'package:pathshala/utils/functions.dart';
 
 class VideoLibraryController extends GetxController {
   static const _pageSize = 10;

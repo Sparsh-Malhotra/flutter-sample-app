@@ -1,6 +1,6 @@
+import 'package:com.jainyouthnoida.pathshala/app_contants.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pathshala/app_contants.dart';
 
 class WidgetWithRole extends StatefulWidget {
   const WidgetWithRole({

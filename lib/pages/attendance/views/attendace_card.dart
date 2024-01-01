@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pathshala/pages/home/models/user_details_model.dart';
-import 'package:pathshala/services/api/user_service.dart';
-import 'package:pathshala/utils/app_colors.dart';
-import 'package:pathshala/utils/app_text_styles.dart';
-import 'package:pathshala/utils/functions.dart';
-import 'package:pathshala/widgets/cards/action_card.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/home/models/user_details_model.dart';
+import 'package:com.jainyouthnoida.pathshala/services/api/user_service.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_colors.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_text_styles.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/functions.dart';
+import 'package:com.jainyouthnoida.pathshala/widgets/cards/action_card.dart';
 
 class AttendanceCard extends StatefulWidget {
   AttendanceCard({

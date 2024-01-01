@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pathshala/pages/home/models/user_details_model.dart';
-import 'package:pathshala/pages/login/controllers/login_controller.dart';
-import 'package:pathshala/utils/app_colors.dart';
-import 'package:pathshala/utils/formatters.dart';
-import 'package:pathshala/widgets/buttons/large_outlined_button.dart';
-import 'package:pathshala/widgets/buttons/loading_button.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/home/models/user_details_model.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/login/controllers/login_controller.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_colors.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/formatters.dart';
+import 'package:com.jainyouthnoida.pathshala/widgets/buttons/large_outlined_button.dart';
+import 'package:com.jainyouthnoida.pathshala/widgets/buttons/loading_button.dart';
 
 class MobileInput extends StatefulWidget {
   const MobileInput({super.key, required this.onSubmit});
@@ -22,7 +22,7 @@ class MobileInput extends StatefulWidget {
 
 class _MobileInputState extends State<MobileInput> {
   LoginController loginController = Get.put(LoginController());
-  var _hasObscuredText = true.obs;
+  final _hasObscuredText = true.obs;
 
   @override
   Widget build(BuildContext context) {

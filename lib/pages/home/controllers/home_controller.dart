@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pathshala/core/models/generic_response.dart';
-import 'package:pathshala/pages/home/models/session_model.dart';
-import 'package:pathshala/services/api/auth_service.dart';
-import 'package:pathshala/services/api/session_service.dart';
-import 'package:pathshala/utils/functions.dart';
+import 'package:com.jainyouthnoida.pathshala/core/models/generic_response.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/home/models/session_model.dart';
+import 'package:com.jainyouthnoida.pathshala/services/api/auth_service.dart';
+import 'package:com.jainyouthnoida.pathshala/services/api/session_service.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/functions.dart';
 
 class HomeController extends GetxController {
   Rx<DateTime> selectedDate = DateTime.now().obs;

@@ -1,7 +1,7 @@
+import 'package:com.jainyouthnoida.pathshala/widgets/resources/video_player/video_player_controls.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pathshala/widgets/resources/video_player/video_player_controls.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart' hide Video;
 

@@ -1,7 +1,7 @@
+import 'package:com.jainyouthnoida.pathshala/pages/attendance/models/mark_attendance.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/attendance/models/student.dart';
+import 'package:com.jainyouthnoida.pathshala/services/dio_client.dart';
 import 'package:dio/dio.dart';
-import 'package:pathshala/pages/attendance/models/mark_attendance.dart';
-import 'package:pathshala/pages/attendance/models/student.dart';
-import 'package:pathshala/services/dio_client.dart';
 
 class AttendanceService {
   final Dio _dio = DioClient.instance;

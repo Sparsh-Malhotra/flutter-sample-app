@@ -1,12 +1,12 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:com.jainyouthnoida.pathshala/app_contants.dart';
+import 'package:com.jainyouthnoida.pathshala/pages/books/controllers/books_controller.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_colors.dart';
+import 'package:com.jainyouthnoida.pathshala/utils/app_text_styles.dart';
+import 'package:com.jainyouthnoida.pathshala/widgets/buttons/large_button.dart';
+import 'package:com.jainyouthnoida.pathshala/widgets/buttons/large_outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pathshala/app_contants.dart';
-import 'package:pathshala/pages/books/controllers/books_controller.dart';
-import 'package:pathshala/utils/app_colors.dart';
-import 'package:pathshala/utils/app_text_styles.dart';
-import 'package:pathshala/widgets/buttons/large_button.dart';
-import 'package:pathshala/widgets/buttons/large_outlined_button.dart';
 
 class VideoFiltersModal extends StatelessWidget {
   VideoFiltersModal({super.key, required this.onApply});
