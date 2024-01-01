@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 const baseUrl = 'http://184.72.203.57:9000/pathshala';
 
 enum Roles {
@@ -65,3 +67,11 @@ const genderPlaceholderImages = {
       'https://ik.imagekit.io/1sqz4p2iv/Others.png?updatedAt=1702667862164',
   '': 'https://ik.imagekit.io/1sqz4p2iv/user.png?updatedAt=1702712126752',
 };
+
+const categoryOptions = [
+  'festival',
+  'historical',
+  'moral',
+  'story',
+  'topic',
+];
