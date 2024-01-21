@@ -55,7 +55,7 @@ class _ReadTextScreenState extends State<ReadTextScreen> {
                       textSize += 1.0;
                     });
                   },
-                  child: Text('A+'),
+                  child: Text('Aa+'),
                 ),
                 SizedBox(width: 10.0),
                 ElevatedButton(
@@ -65,7 +65,7 @@ class _ReadTextScreenState extends State<ReadTextScreen> {
                       textSize = textSize > 1.0 ? textSize - 1.0 : textSize;
                     });
                   },
-                  child: Text('A-'),
+                  child: Text('Aa-'),
                 ),
               ],
               mainAxisAlignment: MainAxisAlignment.end,
