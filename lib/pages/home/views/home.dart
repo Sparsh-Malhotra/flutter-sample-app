@@ -291,10 +291,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .bhaagCategory
                                                   .bhaag
                                                   .name;
-                                          final section =
-                                              modifiedSessions[index]
-                                                  .bhaagClassSection
-                                                  .section;
+                                          final section = modifiedSessions[index].bhaagClassSection.section == 'A' ? '' : modifiedSessions[index].bhaagClassSection.section;
+                                              // modifiedSessions[index]
+                                              //     .bhaagClassSection
+                                              //     .section;
                                           final sessionTime =
                                               modifiedSessions[index].time;
                                           final mentorList =
@@ -417,7 +417,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   children: [
                                                     Expanded(
                                                       child: Text(
-                                                        '$sessionName ($section)',
+                                                        '$sessionName $section',
                                                         style: AppTextStyle
                                                             .mediumBlack18,
                                                       ),
