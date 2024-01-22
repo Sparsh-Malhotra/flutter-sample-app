@@ -5,6 +5,7 @@ class Attendee {
     this.alias,
     this.isPresent = false,
     required this.profileId,
+    required this.attendance,
   });
 
   String id;
@@ -12,4 +13,5 @@ class Attendee {
   String? alias;
   bool isPresent;
   String profileId;
+  double attendance;
 }

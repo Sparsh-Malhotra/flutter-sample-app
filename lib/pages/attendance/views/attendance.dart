@@ -58,6 +58,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
             alias: element.profile['alias'],
             isPresent: _presentAttendeesResponse.data.contains(element.id),
             profileId: element.profile['id'].toString(),
+            attendance: element.attendance,
           );
         }).toList();
 
@@ -273,6 +274,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                             itemBuilder: (context, index) => AttendanceCard(
                               name: students.value[index].name,
                               alias: students.value[index].alias,
+                              attendance: students.value[index].attendance,
                               isPresent: students.value[index].isPresent,
                               profileId: students.value[index].profileId,
                               onChangeAttendance: (value) {

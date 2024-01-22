@@ -57,7 +57,7 @@ class VideoTileState extends State<VideoTile> {
           Container(
             width: 200,
             height: 130,
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withOpacity(0.4),
           ),
           const Positioned(
             top: 10,
@@ -72,11 +72,11 @@ class VideoTileState extends State<VideoTile> {
           ),
           Positioned(
             bottom: 15,
-            left: 50,
-            right: 50,
-            child: IgnorePointer(
+            left: 0,
+            right: 0,
+            child: Center(
               child: Text(
-                widget.video.title,
+                widget.video.title.contains("|") ? widget.video.title.split("|")[0] : widget.video.title,
                 style: AppTextStyle.boldBlack12,
                 textAlign: TextAlign.center,
               ),
