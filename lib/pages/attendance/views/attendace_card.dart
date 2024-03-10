@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pathshala/pages/attendance/models/attendee.dart';
 import 'package:pathshala/pages/home/models/user_details_model.dart';
 import 'package:pathshala/services/api/user_service.dart';
 import 'package:pathshala/utils/app_colors.dart';
@@ -12,6 +13,7 @@ class AttendanceCard extends StatefulWidget {
     super.key,
     required this.name,
     this.alias,
+    this.attendance,
     required this.isPresent,
     required this.profileId,
     required this.onChangeAttendance,
@@ -20,6 +22,7 @@ class AttendanceCard extends StatefulWidget {
 
   final String name;
   final String? alias;
+  final double? attendance;
   final bool isPresent;
   final String profileId;
   void Function(bool value) onChangeAttendance;
@@ -154,7 +157,7 @@ class _AttendanceCardState extends State<AttendanceCard> {
                   ),
                 ),
               ),
-            ),
+            ),   
           ],
         ),
       ),
@@ -177,9 +180,20 @@ class _AttendanceCardState extends State<AttendanceCard> {
                   style: AppTextStyle.mediumBlack18,
                 ),
                 if (widget.alias != null)
-                  Text(
-                    ' (${widget.alias})',
-                    style: AppTextStyle.regularBlack14,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      '(${widget.alias})',
+                      style: AppTextStyle.regularBlack14,
+                    ),
+                  ),
+                if (widget.attendance != null)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      '${widget.attendance!.toStringAsFixed(2)}%', // Rounded to two decimal places
+                      style: AppTextStyle.mediumBlack18,
+                    ),
                   ),
               ],
             ),
@@ -190,7 +204,7 @@ class _AttendanceCardState extends State<AttendanceCard> {
               widget.onChangeAttendance(value);
             },
             activeTrackColor: AppColors.primary,
-          )
+          ),
         ],
       ),
     );

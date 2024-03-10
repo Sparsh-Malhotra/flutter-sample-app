@@ -80,7 +80,7 @@ class Video {
   bool isActive;
   String title;
   String url;
-  String category;
+  String categories;
   List<int> bhaag;
 
   Video({
@@ -88,7 +88,7 @@ class Video {
     required this.isActive,
     required this.title,
     required this.url,
-    required this.category,
+    required this.categories,
     required this.bhaag,
   });
 
@@ -98,7 +98,7 @@ class Video {
       isActive: json['is_active'],
       title: json['title'],
       url: json['url'],
-      category: json['category'],
+      categories: json['categories'],
       bhaag: List<int>.from(json['bhaag']),
     );
   }
@@ -109,7 +109,7 @@ class Video {
     data['is_active'] = isActive;
     data['title'] = title;
     data['url'] = url;
-    data['category'] = category;
+    data['categories'] = categories;
     data['bhaag'] = bhaag;
     return data;
   }

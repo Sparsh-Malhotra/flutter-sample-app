@@ -69,9 +69,9 @@ const genderPlaceholderImages = {
 };
 
 const categoryOptions = [
-  'festival',
-  'historical',
-  'moral',
-  'story',
-  'topic',
+  'Festival',
+  'Historical',
+  'Moral Values',
+  'Story',
+  'Topic',
 ];

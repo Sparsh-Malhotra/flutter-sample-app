@@ -32,17 +32,20 @@ class SessionStudent {
 
 class SessionStudentData {
   int id;
+  double attendance;
   Map<dynamic, dynamic> profile;
 
   SessionStudentData({
     required this.id,
     required this.profile,
+    required this.attendance,
   });
 
   factory SessionStudentData.fromJson(Map<String, dynamic> json) {
     return SessionStudentData(
       id: json['id'],
       profile: json['profile'],
+      attendance: json['attendance'],
     );
   }
 }
