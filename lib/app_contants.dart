@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-const baseUrl = 'http://184.72.203.57:9000/pathshala';
+const baseUrl = 'http://54.173.149.224:9000/pathshala';
 
 enum Roles {
   guest('guest', 0, 'Guest'),

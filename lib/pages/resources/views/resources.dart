@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pathshala/pages/Resources/models/resources_response.dart';
+// import 'package:pathshala/pages/resources/models/resources_response.dart';
 import 'package:pathshala/pages/resources/controllers/resources_controller.dart';
 import 'package:pathshala/pages/resources/views/resource_tile.dart';
 import 'package:pathshala/utils/app_colors.dart';

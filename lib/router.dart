@@ -7,6 +7,7 @@ import 'package:pathshala/pages/login/views/login.dart';
 import 'package:pathshala/pages/register/views/register.dart';
 import 'package:pathshala/pages/resources/views/resources.dart';
 import 'package:pathshala/pages/video_library/views/video_library.dart';
+import 'package:pathshala/pages/attendance_records/views/attendance.dart';
 import 'package:pathshala/splash_screen.dart';
 
 class Routes {
@@ -19,6 +20,7 @@ class Routes {
   static String videoLibraryScreen = '/video-library';
   static String resourcesScreen = '/resources';
   static String readTextScreen = '/read_text';
+  static String attendanceReportsScreen = '/attendance_reports';
 }
 
 final getPages = [
@@ -57,5 +59,9 @@ final getPages = [
   GetPage(
     name: Routes.readTextScreen,
     page: () => ReadTextScreen(text: 'Error 404', title: "Error 404",),
+  ),
+  GetPage(
+    name: Routes.attendanceReportsScreen,
+    page: () => AttendanceRecordScreen(),
   ),
 ];
